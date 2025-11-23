@@ -1,0 +1,264 @@
+'use client'
+
+import { useState, useEffect, useRef, useCallback } from 'react'
+import Image from 'next/image'
+
+export default function SupportSection() {
+  const [isVisible, setIsVisible] = useState(false)
+  const [ailePercent, setAilePercent] = useState(0)
+  const [evlilikPercent, setEvlilikPercent] = useState(0)
+  const [gunlukPercent, setGunlukPercent] = useState(0)
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null)
+
+  const animatePercentages = useCallback(() => {
+    const duration = 2000 // 2 saniye
+    const steps = 60
+    const interval = duration / steps
+
+    const targets = { aile: 65, evlilik: 95, gunluk: 82 }
+    let currentStep = 0
+
+    const timer = setInterval(() => {
+      currentStep++
+      const progress = currentStep / steps
+
+      // Easing function (ease-out)
+      const easeOut = 1 - Math.pow(1 - progress, 3)
+
+      setAilePercent(Math.round(targets.aile * easeOut))
+      setEvlilikPercent(Math.round(targets.evlilik * easeOut))
+      setGunlukPercent(Math.round(targets.gunluk * easeOut))
+
+      if (currentStep >= steps) {
+        clearInterval(timer)
+        setAilePercent(targets.aile)
+        setEvlilikPercent(targets.evlilik)
+        setGunlukPercent(targets.gunluk)
+      }
+    }, interval)
+  }, [])
+
+  useEffect(() => {
+    const currentRef = sectionRef.current
+    if (!currentRef) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isVisible) {
+            setIsVisible(true)
+            animatePercentages()
+          }
+        })
+      },
+      { threshold: 0.2 }
+    )
+
+    observer.observe(currentRef)
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef)
+      }
+    }
+  }, [isVisible, animatePercentages])
+
+  // YouTube video ID ve URL'leri
+  const videoId = 'eE6Rt-bFkvw'
+  const youtubeEmbedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&controls=1&rel=0`
+
+  const openVideoModal = useCallback(() => {
+    setIsVideoModalOpen(true)
+    document.body.style.overflow = 'hidden'
+  }, [])
+
+  const closeVideoModal = useCallback(() => {
+    setIsVideoModalOpen(false)
+    document.body.style.overflow = 'unset'
+  }, [])
+
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [])
+
+  // ESC tuşu ile modal'ı kapat
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isVideoModalOpen) {
+        closeVideoModal()
+      }
+    }
+
+    if (isVideoModalOpen) {
+      window.addEventListener('keydown', handleEscape)
+    }
+
+    return () => {
+      window.removeEventListener('keydown', handleEscape)
+    }
+  }, [isVideoModalOpen, closeVideoModal])
+
+  return (
+    <>
+      <section ref={sectionRef} className="bg-white w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 w-full">
+          {/* Sol Taraf - Metin İçeriği */}
+          <div 
+            className="relative px-6 py-10 sm:px-8 sm:py-12 md:px-12 md:py-16 lg:px-16 lg:py-20 xl:px-20 xl:py-24 flex flex-col justify-center min-h-[500px] sm:min-h-[600px] w-full"
+            style={{
+              backgroundImage: 'url(/bf-pattern-1.png)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundColor: '#151110'
+            }}
+          >
+            <div className="relative z-10 max-w-2xl">
+              {/* Header */}
+              <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                <div className="w-1 h-1 bg-white rounded-full"></div>
+                <div className="w-6 sm:w-8 h-px bg-white"></div>
+                <span className="text-xs sm:text-sm text-white font-sans uppercase tracking-wide">
+                  KİMİN DESTEĞE İHTİYACI VAR?
+                </span>
+              </div>
+
+              {/* Ana Başlık */}
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-serif text-white mb-4 sm:mb-6 leading-tight">
+                Emine Yıldırım&apos;dan psikolojik desteğin faydaları.
+              </h2>
+
+              {/* Açıklama Paragrafı */}
+              <p className="text-sm sm:text-base md:text-base text-white font-sans mb-6 sm:mb-8 leading-relaxed">
+                Psikolojik destek, bireylerin duygusal zorluklarını anlamalarına ve başa çıkma becerileri 
+                geliştirmelerine yardımcı olarak, hayat kalitelerini artırır. Aynı zamanda, kişinin kendini 
+                keşfetmesini ve daha sağlıklı ilişkiler kurmasını destekleyen güvenli bir alan sunar.
+              </p>
+
+              {/* Alt Başlık */}
+              <h3 className="text-lg sm:text-xl md:text-xl text-white font-sans mb-6 sm:mb-8">
+                En çok desteğe ihtiyaç duyan gruplar
+              </h3>
+
+              {/* Progress Bar'lar */}
+              <div className="space-y-4 sm:space-y-6">
+                {/* Aile İçi Psikolojisi */}
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm sm:text-base md:text-base text-white font-sans">Aile İçi Psikolojisi</span>
+                    <span className="text-sm sm:text-base md:text-base text-white font-bold">{ailePercent}%</span>
+                  </div>
+                  <div className="w-full bg-gray-700 h-px relative">
+                    <div 
+                      className="bg-white h-px transition-all duration-300 ease-out"
+                      style={{ width: `${ailePercent}%` }}
+                    ></div>
+                  </div>
+                </div>
+
+                {/* Evlilik ve Aşk Psikolojisi */}
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm sm:text-base md:text-base text-white font-sans">Evlilik ve Aşk Psikolojisi</span>
+                    <span className="text-sm sm:text-base md:text-base text-white font-bold">{evlilikPercent}%</span>
+                  </div>
+                  <div className="w-full bg-gray-700 h-px relative">
+                    <div 
+                      className="bg-white h-px transition-all duration-300 ease-out"
+                      style={{ width: `${evlilikPercent}%` }}
+                    ></div>
+                  </div>
+                </div>
+
+                {/* Günlük Yaşam Psikolojisi */}
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm sm:text-base md:text-base text-white font-sans">Günlük Yaşam Psikolojisi</span>
+                    <span className="text-sm sm:text-base md:text-base text-white font-bold">{gunlukPercent}%</span>
+                  </div>
+                  <div className="w-full bg-gray-700 h-px relative">
+                    <div 
+                      className="bg-white h-px transition-all duration-300 ease-out"
+                      style={{ width: `${gunlukPercent}%` }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Sağ Taraf - Video Thumbnail */}
+          <div className="relative w-full min-h-[500px] sm:min-h-[600px] bg-black cursor-pointer group" onClick={openVideoModal}>
+            <div className="absolute inset-0 w-full h-full">
+              <Image
+                src="/psikolog.jpg"
+                alt="Video Önizleme"
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+            {/* Oynat Butonu */}
+            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 group-hover:bg-opacity-40 transition-all duration-300">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full bg-[#a47355] flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-transform duration-300">
+                <svg
+                  className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white ml-1"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Video Modal */}
+      {isVideoModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4"
+          onClick={closeVideoModal}
+        >
+          <div
+            className="relative w-full max-w-5xl aspect-video bg-black rounded-lg overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Kapat Butonu */}
+            <button
+              onClick={closeVideoModal}
+              className="absolute top-4 right-4 z-10 w-10 h-10 bg-black bg-opacity-70 hover:bg-opacity-90 rounded-full flex items-center justify-center text-white transition-all duration-200"
+              aria-label="Videoyu Kapat"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+            {/* YouTube Video */}
+            <iframe
+              src={youtubeEmbedUrl}
+              className="w-full h-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              title="Emine Yıldırım - Psikolojik Destek"
+            />
+          </div>
+        </div>
+      )}
+    </>
+  )
+}
+

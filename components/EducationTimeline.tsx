@@ -1,0 +1,119 @@
+import Image from 'next/image'
+
+export default function EducationTimeline() {
+  return (
+    <section className="py-12 md:py-16 lg:py-20 bg-primary-lighter">
+      <div className="container mx-auto px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+            {/* Sol Sütun - Fotoğraflar */}
+            <div className="relative max-w-md mx-auto lg:mx-0">
+              {/* Üst Fotoğraf */}
+              <div className="relative w-full max-w-xs aspect-[3/4] rounded-lg overflow-hidden mb-4">
+                <Image
+                  src="/psikolog.jpg"
+                  alt="Emine Yıldırım"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              
+              {/* Alt Fotoğraf - Üst fotoğrafın üzerine binmiş */}
+              <div className="relative w-3/4 max-w-xs aspect-[3/4] rounded-lg overflow-hidden -mt-24 md:-mt-32 ml-auto">
+                <Image
+                  src="/psikolog.jpg"
+                  alt="Emine Yıldırım"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
+
+            {/* Sağ Sütun - Eğitim Bilgileri */}
+            <div className="space-y-6 md:space-y-8">
+              {/* Sub-heading */}
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-2 h-2 rounded-full bg-[#764e45]"></div>
+                <div className="w-12 h-0.5 bg-[#764e45]"></div>
+                <p className="text-xs md:text-sm text-[#764e45] font-semibold uppercase tracking-wide">
+                  EĞİTİM SÜRECİ
+                </p>
+              </div>
+
+              {/* Ana Başlık */}
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-gray-900 leading-tight">
+                Eğitim
+              </h2>
+
+              {/* Akademik Tez */}
+              <div className="space-y-2">
+                <p className="text-sm md:text-base font-bold text-gray-900">
+                  Akademik Tez:
+                </p>
+                <p className="text-sm md:text-base text-gray-700 leading-relaxed">
+                  Evli Bireylerde Cinsel Doyum Ve Bağlanma Stillerinin Evlilik Uyumu İle İlişkisinin İncelenmesi. Emine Yıldırım, İstanbul-2022
+                </p>
+              </div>
+
+              {/* Akademik Proje */}
+              <div className="space-y-2">
+                <p className="text-sm md:text-base font-bold text-gray-900">
+                  Akademik Proje:
+                </p>
+                <p className="text-sm md:text-base text-gray-700 leading-relaxed">
+                  Toplumsal Cinsiyet Rollerinin Evlilik Uyumu İle Etkisi. Emine Yıldırım, İstanbul-2023
+                </p>
+              </div>
+
+              {/* Eğitim Timeline */}
+              <div className="relative pl-8">
+                {/* Timeline Çizgisi - Merkez noktası 8px (left-2) */}
+                <div className="absolute left-2 top-0 bottom-0 w-0.5 bg-[#764e45] -translate-x-1/2"></div>
+
+                {/* Timeline Öğeleri */}
+                <div className="space-y-6 md:space-y-8">
+                  {/* 2022-2023 */}
+                  <div className="relative">
+                    <div className="pl-4">
+                      <p className="text-sm md:text-base font-bold text-gray-900 mb-1">
+                        2022-2023
+                      </p>
+                      <p className="text-sm md:text-base text-gray-700">
+                        Aile Danışmanlığı, Yüksek Lisans, Üsküdar Üniversitesi
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* 2019-2022 */}
+                  <div className="relative">
+                    <div className="pl-4">
+                      <p className="text-sm md:text-base font-bold text-gray-900 mb-1">
+                        2019-2022
+                      </p>
+                      <p className="text-sm md:text-base text-gray-700">
+                        Psikoloji, Yüksek Lisans, Üsküdar Üniversitesi
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* 2015-2019 */}
+                  <div className="relative">
+                    <div className="pl-4">
+                      <p className="text-sm md:text-base font-bold text-gray-900 mb-1">
+                        2015-2019
+                      </p>
+                      <p className="text-sm md:text-base text-gray-700">
+                        Psikoloji, Lisans, Üsküdar Üniversitesi
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
