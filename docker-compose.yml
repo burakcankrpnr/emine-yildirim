@@ -1,0 +1,12 @@
+services:
+  frontend:
+    image: burakcankorpinar/emine-yildirim-psikolog
+    build:
+      context: .
+      no_cache: true
+      dockerfile: Dockerfile
+    container_name: emine-yildirim-psikolog
+    hostname: emine-yildirim-psikolog
+    restart: always
+    ports:
+      - "5006:3000"
