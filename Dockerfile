@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:lts
 
 ENV NEXT_TELEMETRY_DISABLED 1 
 ENV PORT 3000
@@ -6,6 +6,11 @@ ENV PORT 3000
 EXPOSE 3000
 
 WORKDIR /app
+
+RUN apt update
+RUN apt install -y libssl1.1 libcrypto1.1 libcurl4-openssl-dev curl wget
+RUN wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+RUN dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
 
 RUN npm config set loglevel verbose --global && npm set strict-ssl false --global
 
