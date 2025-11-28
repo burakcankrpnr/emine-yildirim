@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 export default function Footer() {
   return (
-    <footer className="bg-[#1A1A1A] text-[#F5F5F5] py-8">
+    <footer className="bg-[#2A2A2A] text-[#F5F5F5] py-8">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-6">
           {/* Column 1: Brand/About Section */}
@@ -38,7 +38,7 @@ export default function Footer() {
             <h4 className="text-[#F5F5F5] font-serif text-lg font-bold mb-2">İletişim</h4>
             <div className="w-12 h-0.5 bg-[#A07B5B] mb-4"></div>
             <ul className="space-y-3 font-sans text-sm">
-              <li className="flex items-start space-x-3">
+              {/* <li className="flex items-start space-x-3">
                 <i className="fas fa-map-marker-alt text-[#A07B5B] mt-1"></i>
                 <a
                   href="https://www.google.com/maps/search/?api=1&query=Şirinyalı,+İsmet+Gökşen+Cd.+Köşk+Apt.+No:+25/11+Kat:+4,+07100+Muratpaşa/Antalya"
@@ -48,7 +48,7 @@ export default function Footer() {
                 >
                   Şirinyalı, İsmet Gökşen Cd. Köşk Apt. No: 25/11 Kat: 4, 07100 Muratpaşa/Antalya
                 </a>
-              </li>
+              </li> */}
               <li className="flex items-center space-x-3">
                 <i className="fas fa-phone text-[#A07B5B]"></i>
                 <a

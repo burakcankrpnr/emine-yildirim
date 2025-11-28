@@ -5,10 +5,10 @@ export default function TopBar() {
         <div className="flex justify-between items-center py-2 text-sm">
           {/* Sol Taraf - İletişim Bilgileri */}
           <div className="hidden lg:flex items-center space-x-6">
-            <div className="flex items-center space-x-2">
+            {/* <div className="flex items-center space-x-2">
               <span className="font-bold text-gray-700">Adres:</span>
               <span className="text-gray-600">Şirinyalı, İsmet Gökşen Cd. No: 25/11 Muratpaşa/Antalya</span>
-            </div>
+            </div> */}
             <div className="flex items-center space-x-2">
               <span className="font-bold text-gray-700">E-Posta:</span>
               <a 
@@ -66,6 +66,8 @@ export default function TopBar() {
     </div>
   )
 }
+
+
 
 
 
