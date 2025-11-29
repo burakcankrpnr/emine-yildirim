@@ -92,7 +92,7 @@ export default function HeroBanner() {
 
                 {/* Paragraf */}
                 <p className="text-base md:text-lg text-white/90 leading-relaxed max-w-xl">
-                  {renderAnimatedText('Her yolculuk cesaretle başlar; zorluklar bazen duraklatsa da, yeniden başlamak her zaman mümkündür. Bu süreçte size rehberlik etmek için yanınızdayız.', 800, 15)}
+                  {renderAnimatedText('Bazen küçük bir adım, büyük bir değişimin başlangıcıdır. Yolculuğunda güçlenmene ve netleşmene destek olmaya hazırım.', 800, 15)}
                 </p>
 
                 {/* Butonlar */}

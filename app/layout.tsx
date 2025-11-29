@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
-import { Montserrat } from 'next/font/google'
+import { Montserrat, Dancing_Script } from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
-import CustomCursor from '@/components/CustomCursor'
 import WhatsAppButton from '@/components/WhatsAppButton'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
@@ -10,6 +9,12 @@ import Footer from '@/components/Footer'
 const montserrat = Montserrat({
   subsets: ['latin'],
   variable: '--font-montserrat',
+  display: 'swap',
+})
+
+const dancingScript = Dancing_Script({
+  subsets: ['latin'],
+  variable: '--font-dancing-script',
   display: 'swap',
 })
 
@@ -136,7 +141,7 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="tr" className={montserrat.variable}>
+    <html lang="tr" className={`${montserrat.variable} ${dancingScript.variable}`}>
       <head>
         <link 
           rel="stylesheet" 
@@ -159,7 +164,6 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased">
-        <CustomCursor />
         <Navbar />
         <main>{children}</main>
         <Footer />

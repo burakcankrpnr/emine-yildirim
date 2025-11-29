@@ -1,6 +1,5 @@
 import AboutProfile from '@/components/AboutProfile'
 import { Metadata } from 'next'
-import Counter from '@/components/Counter'
 import EducationTimeline from '@/components/EducationTimeline'
 import HealingQuote from '@/components/HealingQuote'
 export const metadata: Metadata = {
@@ -50,7 +49,6 @@ export default function AboutPage() {
       </section>
 
       <AboutProfile />
-      <Counter />
       <HealingQuote />
       <EducationTimeline />
     </div>

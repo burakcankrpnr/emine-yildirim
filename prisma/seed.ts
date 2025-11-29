@@ -5,19 +5,19 @@ const prisma = new PrismaClient()
 
 async function main() {
   // Admin kullanıcı oluştur
-  const hashedPassword = await bcrypt.hash('admin123456', 10)
+  const hashedPassword = await bcrypt.hash('emineyildirim07', 10)
   
   const admin = await prisma.user.upsert({
-    where: { email: 'admin@example.com' },
+    where: { email: 'emineyildirimpsikolog@gmail.com' },
     update: {
       password: hashedPassword,
-      name: 'Admin',
+      name: 'Emine Yıldırım',
       role: 'admin',
     },
     create: {
-      email: 'admin@example.com',
+      email: 'emineyildirimpsikolog@gmail.com',
       password: hashedPassword,
-      name: 'Admin',
+      name: 'Emine Yıldırım',
       role: 'admin',
     },
   })
@@ -47,15 +47,10 @@ async function main() {
 
   console.log('Forum kategorileri oluşturuldu')
 
-  // Admin kullanıcısını Emine Yıldırım olarak güncelle
-  const emineYildirim = await prisma.user.update({
-    where: { id: admin.id },
-    data: {
-      name: 'Emine Yıldırım',
-    },
-  })
+  // Admin kullanıcısı zaten Emine Yıldırım olarak oluşturuldu
+  const emineYildirim = admin
 
-  console.log('Kullanıcı güncellendi:', emineYildirim)
+  console.log('Kullanıcı hazır:', emineYildirim)
 
   // Örnek blog yazıları oluştur
   const blogPost1 = await prisma.blogPost.upsert({

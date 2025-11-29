@@ -13,9 +13,6 @@ export default function OnlineCounseling() {
             <div className="flex flex-col justify-center p-8 md:p-12 lg:p-16 space-y-6 md:space-y-8">
               {/* Başlık */}
               <div className="space-y-2 md:space-y-3">
-                <h2 className="text-base md:text-lg lg:text-xl text-gray-500 font-medium">
-                  Yetişkinler İçin;
-                </h2>
                 <h3 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 leading-tight">
                   Online Psikolojik Danışmanlık
                 </h3>

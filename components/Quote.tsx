@@ -13,10 +13,9 @@ export default function Quote() {
             </svg>
           </div>
           <blockquote className="text-xl md:text-2xl lg:text-3xl font-light italic leading-relaxed mb-6 md:mb-8 px-2 md:px-0">
-            &ldquo;Biz neysek oyuz çünkü biz neysek o olduk. İnsan yaşamının ve güdülerinin sorunlarını 
-            çözmek için gereken şey ahlaki tahminler değil, daha fazla bilgidir.&rdquo;
+            &ldquo;Kişinin yaşamını değiştiren en büyük güç, geçmişi değil; geleceğe dair kurduğu anlamlı bir amaçtır.&rdquo;
           </blockquote>
-          <p className="text-base md:text-lg font-semibold">~ Sigmund Freud</p>
+          <p className="text-base md:text-lg font-semibold">~Alfred Adler</p>
         </div>
       </div>
     </section>

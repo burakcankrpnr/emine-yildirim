@@ -7,7 +7,6 @@ import Quote from '@/components/Quote'
 import BlogSection from '@/components/BlogSection'
 import Testimonials from '@/components/Testimonials'
 import ContactForm from '@/components/ContactForm'
-import Counter from '@/components/Counter'
 import CounselingServices from '@/components/CounselingServices'
 import InstagramReelsServer from '@/components/InstagramReelsServer'
 import { Metadata } from 'next'
@@ -30,7 +29,6 @@ export default function Home() {
     <div>
       <HeroBanner />
       <AboutProfile />
-      <Counter />
       <CounselingServices />
       <SupportSection />
       <BlogSection />

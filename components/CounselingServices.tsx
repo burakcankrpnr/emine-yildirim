@@ -9,16 +9,16 @@ export default function CounselingServices() {
       description: "Yetişkin psikoloğu, bireylerin psikolojik sağlıklarını ve genel yaşam kalitelerini artırmak amacıyla destek ve danışmanlık hizmetleri sunan uzmanlardır."
     },
     {
-      title: "Çocuk ve Ergen",
-      description: "Çocuk ve ergen psikolojisi, bireylerin gelişim dönemlerine odaklanır. Çocukluk dönemi, 0-12 yaş arası gelişimsel aşamaları kapsar."
+      title: "Çocuk",
+      description: "Çocuk terapisi, oyun ve yaratıcı etkinlikler aracılığıyla duygularını ifade etmesine, kaygı ve davranış sorunlarıyla başa çıkmasına destek olur. Kendini güvenle ifade etmesini sağlar."
     },
     {
-      title: "Aile",
-      description: "Aile danışmanlığı, aile içindeki bireylerin birbirlerini daha iyi anlamalarına ve sağlıklı ilişkiler kurmalarına yardımcı olur."
-    },
-    {
-      title: "Çift",
-      description: "Çift ve aile danışmanlığı, ilişkilerdeki sorunları çözmek ve iletişimi güçlendirmek için yapılan bir destek sürecidir."
+      title: "Ergen",
+        description: "Ergen terapisi, kimlik gelişimi, sosyal ilişkiler ve duygusal zorluklarla başa çıkma konularında destek sunar. Kendini keşfetmesine ve özgüvenini güçlendirmesine yardımcı olur."
+      },
+      {
+      title: "Aile ve Çift",
+      description: "Aile ve çift danışmanlığı, ilişkilerdeki iletişimi güçlendirmeye, çatışmaları çözmeye ve bağları kuvvetlendirmeye odaklanır. Hem aile üyeleri hem de partnerler arasındaki sağlıklı ve anlayışlı ilişkilerin kurulmasına destek olur."
     }
   ]
 
@@ -111,9 +111,6 @@ export default function CounselingServices() {
             <div className="flex flex-col justify-center p-6 md:p-10 lg:p-12 space-y-4 md:space-y-6">
               {/* Başlık */}
               <div className="space-y-1 md:space-y-2">
-                <h2 className="text-sm md:text-base lg:text-lg text-gray-500 font-medium">
-                  Yetişkinler İçin;
-                </h2>
                 <h3 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 leading-tight">
                   Online Psikolojik Danışmanlık
                 </h3>

@@ -95,13 +95,10 @@ export default function AboutProfile() {
 
               {/* İmza ve İsim */}
               <div className="  space-y-2">
-                <div className="text-2xl md:text-3xl lg:text-4xl font-serif text-gray-900 italic" style={{ fontFamily: 'cursive' }}>
+                <div className="text-2xl md:text-3xl lg:text-4xl text-gray-900 italic" style={{ fontFamily: 'var(--font-dancing-script), cursive' }}>
                   Emine Yıldırım
                 </div>
-                <p className="text-sm md:text-base lg:text-lg text-gray-700">
-                  Emine Yıldırım<br />
                   <span className="text-xs md:text-sm lg:text-base">Psikolog</span>
-                </p>
               </div>
             </div>
           </div>
