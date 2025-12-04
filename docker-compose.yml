@@ -13,3 +13,8 @@ services:
     restart: always
     ports:
       - "5006:3000"
+    volumes:
+      # Veritabanını kalıcı hale getir (container restart edilince kaybetme)
+      - ./prisma:/app/prisma
+      # Public uploads klasörünü de kalıcı tut
+      - ./public/uploads:/app/public/uploads

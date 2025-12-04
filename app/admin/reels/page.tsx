@@ -3,6 +3,10 @@ import { cookies } from 'next/headers'
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 
+// Admin panelinde her zaman güncel veri göster
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 async function checkAuth() {
   const cookieStore = await cookies()
   const auth = cookieStore.get('admin-auth')

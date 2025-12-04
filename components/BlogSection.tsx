@@ -3,6 +3,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import BlogSlider from './BlogSlider'
 
+// Next.js cache'ini devre dışı bırak - her requestte yeni veri çek
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 // Okuma süresini hesaplayan fonksiyon (ortalama 200 kelime/dakika)
 function calculateReadTime(content: string): string {
   // HTML etiketlerini temizle
