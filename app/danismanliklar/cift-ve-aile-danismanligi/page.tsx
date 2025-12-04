@@ -74,10 +74,6 @@ export default function CoupleFamilyCounselingPage() {
                 </li>
                 <li className="flex items-start">
                   <span className="text-[#764e45] mr-2">•</span>
-                  <span>Cinsel uyumsuzluklar</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-[#764e45] mr-2">•</span>
                   <span>Aile içi roller ve sorumluluklar</span>
                 </li>
                 <li className="flex items-start">

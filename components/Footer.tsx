@@ -70,8 +70,7 @@ export default function Footer() {
               <li className="flex items-start space-x-3">
                 <i className="fas fa-clock text-[#A07B5B] mt-1"></i>
                 <div className="text-[#F5F5F5]">
-                  <div><span className="font-bold">Pzt- Cuma:</span> (09:00 - 22:00)</div>
-                  <div><span className="font-bold">Cmt & Pazar:</span> (09:00 - 22:00)</div>
+                  <div><span className="font-bold">Pazartesi - Cumartesi:</span> (09:00 - 18:00)</div>
                 </div>
               </li>
             </ul>

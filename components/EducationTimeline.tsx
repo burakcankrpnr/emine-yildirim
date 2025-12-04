@@ -109,6 +109,20 @@ export default function EducationTimeline() {
                   </div>
                 </div>
               </div>
+
+              {/* Aldığım Eğitimler */}
+              <div className="pt-8 border-t border-gray-200 mt-4">
+                <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-4">
+                  Aldığım Eğitimler
+                </h3>
+                <ul className="space-y-2 text-sm md:text-base text-gray-700 list-disc list-inside">
+                  <li>Bilişsel Davranışçı Terapi (BDT)</li>
+                  <li>Kabul ve Kararlılık Terapisi (ACT)</li>
+                  <li>Travma ve Yas Çalışmaları</li>
+                  <li>Pozitif Psikoloji Yaklaşımı</li>
+                  <li>Kısa Süreli Çözüm Odaklı Terapi</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
