@@ -37,7 +37,7 @@ export default function OnlineCounseling() {
             <div className="relative w-full aspect-[3/4] lg:aspect-auto lg:h-full min-h-[400px] lg:min-h-[600px]">
               <Image
                 src="/psikolog.jpg"
-                alt="Online Psikolojik Danışmanlık"
+                alt="Online Psikolojik Danışmanlık "
                 fill
                 className="object-cover"
               />
