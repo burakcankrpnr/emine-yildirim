@@ -45,82 +45,39 @@ export default function EducationTimeline() {
                 Eğitim
               </h2>
 
-              {/* Akademik Tez */}
-              <div className="space-y-2">
-                <p className="text-sm md:text-base font-bold text-gray-900">
-                  Akademik Tez:
-                </p>
-                <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                  Evli Bireylerde Cinsel Doyum Ve Bağlanma Stillerinin Evlilik Uyumu İle İlişkisinin İncelenmesi. Emine Yıldırım, İstanbul-2022
-                </p>
-              </div>
-
-              {/* Akademik Proje */}
-              <div className="space-y-2">
-                <p className="text-sm md:text-base font-bold text-gray-900">
-                  Akademik Proje:
-                </p>
-                <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                  Toplumsal Cinsiyet Rollerinin Evlilik Uyumu İle Etkisi. Emine Yıldırım, İstanbul-2023
-                </p>
-              </div>
-
-              {/* Eğitim Timeline */}
+              {/* Antalya Belek Üniversitesi - Lisans Eğitimi */}
               <div className="relative pl-8">
-                {/* Timeline Çizgisi - Merkez noktası 8px (left-2) */}
+                {/* Timeline Çizgisi */}
                 <div className="absolute left-2 top-0 bottom-0 w-0.5 bg-[#764e45] -translate-x-1/2"></div>
 
-                {/* Timeline Öğeleri */}
                 <div className="space-y-6 md:space-y-8">
-                  {/* 2022-2023 */}
                   <div className="relative">
                     <div className="pl-4">
                       <p className="text-sm md:text-base font-bold text-gray-900 mb-1">
-                        2022-2023
+                        Psikoloji, Lisans
                       </p>
                       <p className="text-sm md:text-base text-gray-700">
-                        Aile Danışmanlığı, Yüksek Lisans, Üsküdar Üniversitesi
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* 2019-2022 */}
-                  <div className="relative">
-                    <div className="pl-4">
-                      <p className="text-sm md:text-base font-bold text-gray-900 mb-1">
-                        2019-2022
-                      </p>
-                      <p className="text-sm md:text-base text-gray-700">
-                        Psikoloji, Yüksek Lisans, Üsküdar Üniversitesi
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* 2015-2019 */}
-                  <div className="relative">
-                    <div className="pl-4">
-                      <p className="text-sm md:text-base font-bold text-gray-900 mb-1">
-                        2015-2019
-                      </p>
-                      <p className="text-sm md:text-base text-gray-700">
-                        Psikoloji, Lisans, Üsküdar Üniversitesi
+                        Antalya Belek Üniversitesi
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Aldığım Eğitimler */}
+              {/* Profesyonel Eğitimler */}
               <div className="pt-8 border-t border-gray-200 mt-4">
                 <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-4">
-                  Aldığım Eğitimler
+                  Uzmanlık ve Mesleki Eğitimler
                 </h3>
+                <p className="text-sm md:text-base text-gray-700 mb-4">
+                  Lisans eğitimi süresince ve sonrasında, bireysel danışan ihtiyaçlarına bütüncül bir bakış açısıyla yaklaşabilmek amacıyla farklı kuramsal ekollere ve uygulamalı çalışmalara yönelik eğitim programlarına katılmıştır.
+                </p>
                 <ul className="space-y-2 text-sm md:text-base text-gray-700 list-disc list-inside">
-                  <li>Bilişsel Davranışçı Terapi (BDT)</li>
-                  <li>Kabul ve Kararlılık Terapisi (ACT)</li>
-                  <li>Travma ve Yas Çalışmaları</li>
-                  <li>Pozitif Psikoloji Yaklaşımı</li>
-                  <li>Kısa Süreli Çözüm Odaklı Terapi</li>
+                  <li>Bilişsel Davranışçı Terapi (BDT) temelli psikoterapi eğitimi</li>
+                  <li>Kabul ve Kararlılık Terapisi (ACT) yaklaşımı ile danışanla çalışma becerileri</li>
+                  <li>Travma ve yas süreçlerinde psikolojik destek ve müdahale eğitimi</li>
+                  <li>Pozitif psikoloji odaklı iyi oluş ve güçlendirme çalışmaları</li>
+                  <li>Kısa süreli çözüm odaklı terapi teknikleri ve uygulamaları</li>
                 </ul>
               </div>
             </div>
