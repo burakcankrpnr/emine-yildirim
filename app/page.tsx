@@ -11,6 +11,10 @@ import CounselingServices from '@/components/CounselingServices'
 import InstagramReelsServer from '@/components/InstagramReelsServer'
 import { Metadata } from 'next'
 
+// Sayfanın her istekte güncel veriyi çekmesi için dinamik render
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export const metadata: Metadata = {
   title: 'Antalya Psikolog - Psikolog Emine Yıldırım',
   description: 'Antalya\'da profesyonel psikolojik destek hizmetleri.  Psikolog Emine Yıldırım ile yetişkin, çocuk, ergen ve aile psikolojisi alanlarında uzman hizmet.',

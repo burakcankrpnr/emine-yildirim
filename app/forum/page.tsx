@@ -1,6 +1,10 @@
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 
+// Forum anasayfasını dinamik yap
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function ForumPage() {
   const categories = await prisma.forumCategory.findMany({
     include: {

@@ -3,6 +3,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Metadata } from 'next'
 
+// Blog liste sayfasını dinamik yap
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export const metadata: Metadata = {
   title: 'Blog Yazıları - Psikolog Emine Yıldırım',
   description: 'Psikoloji, danışmanlık ve kişisel gelişim konularında güncel blog yazıları',

@@ -2,6 +2,10 @@ import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import ForumReplies from '@/components/ForumReplies'
 
+// Konu detay sayfasını dinamik yap
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function ForumTopicPage({
   params,
 }: {
