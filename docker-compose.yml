@@ -8,7 +8,7 @@ services:
     container_name: emine-yildirim-psikolog
     hostname: emine-yildirim-psikolog
     environment:
-      - DATABASE_URL=file:./prisma/dev.db
+      - DATABASE_URL=postgresql://neondb_owner:npg_5iyVYn7NFHjU@ep-falling-water-a4azy384-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
       - PORT=3000
     restart: always
     ports:

@@ -1,7 +1,7 @@
 FROM node:lts
 
 ENV NEXT_TELEMETRY_DISABLED=1 
-ENV DATABASE_URL="file:./prisma/dev.db"
+ENV DATABASE_URL="postgresql://neondb_owner:npg_5iyVYn7NFHjU@ep-falling-water-a4azy384-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
 ENV PORT 3000
 
 EXPOSE 3000
