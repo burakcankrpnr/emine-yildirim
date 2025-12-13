@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     // Email gönder
     try {
       await sendEmail({
-        to: process.env.SMTP_TO || 'emine@example.com',
+        to: process.env.SMTP_TO || 'emineyildirimpsikolog@gmail.com',
         subject: `Yeni İletişim Formu: ${subject}`,
         html: `
           <h2>Yeni İletişim Formu Mesajı</h2>

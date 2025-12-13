@@ -9,8 +9,8 @@ export default function HeroBanner() {
 
   // Slider için arka plan görselleri - kullanıcı kendi görsellerini ekleyebilir
   const sliderImages = [
-    '/psikolog.jpg', // Placeholder - kullanıcı kendi görsellerini ekleyecek
-    '/psikolog.jpg', // İkinci slide için
+    '/kapak.jpg', // Placeholder - kullanıcı kendi görsellerini ekleyecek
+    '/kapak.jpg', // İkinci slide için
   ]
 
   // Otomatik slider geçişi

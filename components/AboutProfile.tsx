@@ -21,7 +21,7 @@ export default function AboutProfile() {
               {/* Fotoğraf */}
               <div className="relative w-full aspect-[3/4] rounded-lg overflow-hidden">
                 <Image
-                  src="/psikolog.jpg"
+                  src="/kapak.jpg"
                   alt="Psikolog Emine Yıldırım"
                   fill
                   className="object-cover"

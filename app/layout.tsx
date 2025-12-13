@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     description: 'Antalya\'da profesyonel psikolojik destek hizmetleri. Psikolog Emine Yıldırım ile yetişkin, çocuk, ergen ve aile psikolojisi alanlarında uzman hizmet.',
     images: [
       {
-        url: '/psikolog.jpg',
+        url: '/kapak.jpg',
         width: 1200,
         height: 630,
         alt: 'Psikolog Emine Yıldırım',
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Antalya Psikolog - Psikolog Emine Yıldırım',
     description: 'Antalya\'da profesyonel psikolojik destek hizmetleri.  Psikolog Emine Yıldırım ile yetişkin, çocuk, ergen ve aile psikolojisi alanlarında uzman hizmet.',
-    images: ['/psikolog.jpg'],
+    images: ['/kapak.jpg'],
   },
   robots: {
     index: true,
@@ -111,7 +111,7 @@ export default function RootLayout({
     jobTitle: ' Psikolog',
     description: ' Psikolog Emine Yıldırım - Antalya\'da profesyonel psikolojik destek hizmetleri sunmaktadır.',
     url: baseUrl,
-    image: `${baseUrl}/psikolog.jpg`,
+    image: `${baseUrl}/kapak.jpg`,
     knowsAbout: [
       'Psikoloji',
       'Psikoloji',

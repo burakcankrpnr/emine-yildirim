@@ -10,6 +10,7 @@ export default function SupportSection() {
   const [gunlukPercent, setGunlukPercent] = useState(0)
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   const animatePercentages = useCallback(() => {
     const duration = 2000 // 2 saniye
@@ -63,10 +64,6 @@ export default function SupportSection() {
       }
     }
   }, [isVisible, animatePercentages])
-
-  // YouTube video ID ve URL'leri
-  const videoId = 'eE6Rt-bFkvw'
-  const youtubeEmbedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&controls=1&rel=0`
 
   const openVideoModal = useCallback(() => {
     setIsVideoModalOpen(true)
@@ -190,22 +187,23 @@ export default function SupportSection() {
             </div>
           </div>
 
-          {/* Sağ Taraf - Video Thumbnail */}
-          <div className="relative w-full min-h-[500px] sm:min-h-[600px] bg-black cursor-pointer group" onClick={openVideoModal}>
-            <div className="absolute inset-0 w-full h-full">
-              <Image
-                src="/psikolog.jpg"
-                alt="Video Önizleme"
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
-            {/* Oynat Butonu */}
-            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 group-hover:bg-opacity-40 transition-all duration-300">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full bg-[#a47355] flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-transform duration-300">
+          {/* Sağ Taraf - Video Fragman */}
+          <div className="relative w-full min-h-[500px] sm:min-h-[600px] bg-black cursor-pointer group overflow-hidden" onClick={openVideoModal}>
+            {/* Arka Plan Video - Fragman gibi otomatik oynatılıyor */}
+            <video
+              ref={videoRef}
+              src="/deneme.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            {/* Overlay ve Oynat Butonu */}
+            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20 group-hover:bg-opacity-30 transition-all duration-300">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-[#a47355] flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-transform duration-300 border-2 border-white">
                 <svg
-                  className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white ml-1"
+                  className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 text-white ml-0.5"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -220,21 +218,21 @@ export default function SupportSection() {
       {/* Video Modal */}
       {isVideoModalOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-95 p-2 sm:p-4 md:p-6"
           onClick={closeVideoModal}
         >
           <div
-            className="relative w-full max-w-5xl aspect-video bg-black rounded-lg overflow-hidden"
+            className="relative w-full h-full max-w-7xl max-h-[95vh] flex items-center justify-center"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Kapat Butonu */}
             <button
               onClick={closeVideoModal}
-              className="absolute top-4 right-4 z-10 w-10 h-10 bg-black bg-opacity-70 hover:bg-opacity-90 rounded-full flex items-center justify-center text-white transition-all duration-200"
+              className="absolute top-2 right-2 sm:top-4 sm:right-4 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-black bg-opacity-50 hover:bg-opacity-70 rounded-full flex items-center justify-center text-white transition-all duration-300"
               aria-label="Videoyu Kapat"
             >
               <svg
-                className="w-6 h-6"
+                className="w-6 h-6 sm:w-8 sm:h-8"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -247,14 +245,16 @@ export default function SupportSection() {
                 />
               </svg>
             </button>
-            {/* YouTube Video */}
-            <iframe
-              src={youtubeEmbedUrl}
-              className="w-full h-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              title="Emine Yıldırım - Psikolojik Destek"
-            />
+            {/* Video Player */}
+            <video
+              src="/deneme.mp4"
+              controls
+              autoPlay
+              className="w-full h-full object-contain rounded-lg"
+              style={{ maxHeight: '95vh' }}
+            >
+              Tarayıcınız video oynatmayı desteklemiyor.
+            </video>
           </div>
         </div>
       )}

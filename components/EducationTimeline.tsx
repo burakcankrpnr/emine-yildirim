@@ -11,7 +11,7 @@ export default function EducationTimeline() {
               {/* Üst Fotoğraf */}
               <div className="relative w-full max-w-xs aspect-[3/4] rounded-lg overflow-hidden mb-4">
                 <Image
-                  src="/psikolog.jpg"
+                  src="/kapak.jpg"
                   alt="Emine Yıldırım"
                   fill
                   className="object-cover"
@@ -21,7 +21,7 @@ export default function EducationTimeline() {
               {/* Alt Fotoğraf - Üst fotoğrafın üzerine binmiş */}
               <div className="relative w-3/4 max-w-xs aspect-[3/4] rounded-lg overflow-hidden -mt-24 md:-mt-32 ml-auto">
                 <Image
-                  src="/psikolog.jpg"
+                  src="/kapak.jpg"
                   alt="Emine Yıldırım"
                   fill
                   className="object-cover"

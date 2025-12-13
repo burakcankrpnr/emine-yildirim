@@ -30,7 +30,7 @@ SMTP_PORT="587"
 SMTP_USER="your-email@gmail.com"
 SMTP_PASS="your-app-password"
 SMTP_FROM="your-email@gmail.com"
-SMTP_TO="emine@example.com"
+SMTP_TO="emine@gmail.com"
 NEXT_PUBLIC_WHATSAPP_NUMBER="905326499146"
 ```
 
@@ -51,7 +51,7 @@ npm run dev
 
 ## Admin Girişi
 
-- Email: admin@example.com
+- Email: admin@gmail.com
 - Şifre: admin123
 
 ## Renk Paleti

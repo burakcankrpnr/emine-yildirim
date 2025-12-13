@@ -91,7 +91,7 @@
    - id, url, title, order, active
 
 ## Seed Data
-- Admin kullanıcı oluşturulacak (email: admin@example.com)
+- Admin kullanıcı oluşturulacak (email: admin@gmail.com)
 
 ## SMTP Yapılandırması
 - Form gönderimlerinde Emine Hanım'a email bildirimi

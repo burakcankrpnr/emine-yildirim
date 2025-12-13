@@ -1,8 +1,8 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Çift ve Aile Danışmanlığı - Psikolog Emine Yıldırım',
-  description: 'Çift ve aile danışmanlığı hizmetleri. İlişki problemleri, iletişim sorunları ve aile içi çatışmalar için profesyonel destek.',
+  title: 'Aile ve Çift Danışmanlığı - Psikolog Emine Yıldırım',
+  description: 'Aile ve Çift Danışmanlığı hizmetleri. İlişki problemleri, iletişim sorunları ve aile içi çatışmalar için profesyonel destek.',
 }
 
 export default function CoupleFamilyCounselingPage() {
@@ -34,7 +34,7 @@ export default function CoupleFamilyCounselingPage() {
               
               {/* Ana Başlık */}
               <h1 className="text-2xl md:text-4xl lg:text-5xl font-serif text-white leading-tight mb-3">
-                Çift ve Aile Danışmanlığı
+                Aile ve Çift Danışmanlığı
               </h1>
               
               {/* Açıklama */}
@@ -52,10 +52,10 @@ export default function CoupleFamilyCounselingPage() {
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-lg shadow-md p-8 md:p-12 space-y-6">
               <h2 className="text-2xl md:text-3xl font-serif text-gray-900 mb-4">
-                Çift ve Aile Danışmanlığı Nedir?
+                Aile ve Çift Danışmanlığı Nedir?
               </h2>
               <p className="text-gray-700 leading-relaxed">
-                Çift ve aile danışmanlığı, ilişkilerde yaşanan sorunları çözmek ve aile içi iletişimi güçlendirmek için 
+                Aile ve Çift Danışmanlığı, ilişkilerde yaşanan sorunları çözmek ve aile içi iletişimi güçlendirmek için 
                 profesyonel bir destek sürecidir. Bu süreçte, çiftlerin ve ailelerin karşılaştığı zorlukları birlikte 
                 ele alarak, sağlıklı iletişim yolları geliştirmelerine yardımcı oluyoruz.
               </p>

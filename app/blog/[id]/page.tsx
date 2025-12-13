@@ -21,7 +21,7 @@ export async function generateMetadata({
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://psikologemineyildirim.com.tr'
   const postUrl = `${siteUrl}/blog/${params.id}`
-  const imageUrl = post.image ? `${siteUrl}${post.image}` : `${siteUrl}/psikolog.jpg`
+  const imageUrl = post.image ? `${siteUrl}${post.image}` : `${siteUrl}/kapak.jpg`
 
   return {
     title: post.title,

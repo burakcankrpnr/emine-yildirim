@@ -1,8 +1,10 @@
 'use client'
 
 import Image from 'next/image'
+import { useState } from 'react'
 
 export default function CounselingServices() {
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
   const services = [
     {
       title: "Yetişkin",
@@ -131,14 +133,30 @@ export default function CounselingServices() {
               </div>
             </div>
 
-            {/* Sağ Sütun - Fotoğraf */}
-            <div className="relative w-full aspect-[3/4] lg:aspect-auto lg:h-full min-h-[400px] lg:min-h-[600px]">
+            {/* Sağ Sütun - Fotoğraf ve Video Butonu */}
+            <div className="relative w-full aspect-[3/4] lg:aspect-auto lg:h-full min-h-[400px] lg:min-h-[600px] group cursor-pointer">
               <Image
-                src="/psikolog.jpg"
+                src="/kapak.jpg"
                 alt="Online Psikolojik Danışmanlık"
                 fill
                 className="object-cover"
               />
+              {/* Overlay ve Video Oynatma Butonu */}
+              <div 
+                className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center"
+                onClick={() => setIsVideoModalOpen(true)}
+              >
+                {/* Play İkonu */}
+                <div className="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-full bg-[#a47355] flex items-center justify-center shadow-2xl border-2 border-white hover:scale-110 transition-transform duration-300 cursor-pointer">
+                  <svg 
+                    className="w-6 h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 text-white ml-0.5" 
+                    fill="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -157,6 +175,48 @@ export default function CounselingServices() {
         </div>
       </div>
     </div>
+
+    {/* Video Modal */}
+    {isVideoModalOpen && (
+      <div
+        className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6"
+        onClick={() => setIsVideoModalOpen(false)}
+      >
+        <div
+          className="relative w-full h-full max-w-7xl max-h-[95vh] flex items-center justify-center"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Kapat Butonu */}
+          <button
+            onClick={() => setIsVideoModalOpen(false)}
+            className="absolute top-2 right-2 sm:top-4 sm:right-4 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-black bg-opacity-50 hover:bg-opacity-70 text-white rounded-full flex items-center justify-center transition-all duration-300"
+            aria-label="Kapat"
+          >
+            <svg 
+              className="w-6 h-6 sm:w-8 sm:h-8" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+
+          {/* Video Container */}
+          <div className="relative w-full h-full flex items-center justify-center">
+            <video
+              src="/online-terapi-final.mp4"
+              controls
+              autoPlay
+              className="w-full h-full object-contain rounded-lg"
+              style={{ maxHeight: '95vh' }}
+            >
+              Tarayıcınız video oynatmayı desteklemiyor.
+            </video>
+          </div>
+        </div>
+      </div>
+    )}
     </>
   )
 }

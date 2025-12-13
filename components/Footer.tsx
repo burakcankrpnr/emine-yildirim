@@ -84,7 +84,7 @@ export default function Footer() {
               <li className="flex items-center space-x-2">
                 <div className="w-2 h-2 rounded-full bg-[#A07B5B]"></div>
                 <Link href="/danismanliklar/cift-ve-aile-danismanligi" className="text-[#F5F5F5] hover:text-[#A07B5B] transition-colors">
-                  Çift ve Aile Danışmanlığı
+                  Aile ve Çift Danışmanlığı
                 </Link>
               </li>
               <li className="flex items-center space-x-2">

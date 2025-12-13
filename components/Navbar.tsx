@@ -19,7 +19,7 @@ export default function Navbar() {
   ]
 
   const counselingLinks = [
-    { href: '/danismanliklar/cift-ve-aile-danismanligi', label: 'Çift ve Aile Danışmanlığı' },
+    { href: '/danismanliklar/cift-ve-aile-danismanligi', label: 'Aile ve Çift Danışmanlığı' },
     { href: '/danismanliklar/cocuk-ergen-psikolojisi', label: 'Çocuk - Ergen Psikolojisi' },
     { href: '/danismanliklar/ebeveyn-danismanligi', label: 'Ebeveyn Danışmanlığı' },
     { href: '/danismanliklar/yetiskin-psikolojisi', label: 'Yetişkin Psikolojisi' },

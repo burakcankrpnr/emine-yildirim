@@ -58,7 +58,7 @@ async function main() {
       id: 'blog-1',
     },
     update: {
-      image: '/psikolog.jpg',
+      image: '/kapak.jpg',
     },
     create: {
       id: 'blog-1',
@@ -81,7 +81,7 @@ async function main() {
         <p>Çocuğunuzla açık iletişim kurun. Onu dinleyin ve duygularını ciddiye alın. Okul yönetimiyle iletişime geçin ve durumu bildirin. Çocuğunuza güvenli alanlar yaratın ve profesyonel destek almayı düşünün.</p>
       `,
       excerpt: 'Akran zorbalığı, çocukların okul hayatında karşılaşabileceği ciddi bir sorundur. Bu yazıda, çocuğunuzu zorbalıktan korumak için pratik öneriler bulacaksınız.',
-      image: '/psikolog.jpg',
+      image: '/kapak.jpg',
       published: true,
       authorId: emineYildirim.id,
     },
@@ -92,7 +92,7 @@ async function main() {
       id: 'blog-2',
     },
     update: {
-      image: '/psikolog.jpg',
+      image: '/kapak.jpg',
     },
     create: {
       id: 'blog-2',
@@ -122,7 +122,7 @@ async function main() {
         </ul>
       `,
       excerpt: 'TikTok gibi sosyal medya platformlarının çocuklar için güvenli kullanımı hakkında bilgi edinin ve çocuğunuzu nasıl koruyabileceğinizi öğrenin.',
-      image: '/psikolog.jpg',
+      image: '/kapak.jpg',
       published: true,
       authorId: emineYildirim.id,
     },
@@ -133,7 +133,7 @@ async function main() {
       id: 'blog-3',
     },
     update: {
-      image: '/psikolog.jpg',
+      image: '/kapak.jpg',
     },
     create: {
       id: 'blog-3',
@@ -162,7 +162,7 @@ async function main() {
         </ul>
       `,
       excerpt: 'Çocuğunuzun TikTok kullanımında karşılaşabileceğiniz kriz durumları için hazırlıklı olun. 10 dakikalık kriz planı ile hızlı ve etkili müdahale edin.',
-      image: '/psikolog.jpg',
+      image: '/kapak.jpg',
       published: true,
       authorId: emineYildirim.id,
     },
@@ -173,7 +173,7 @@ async function main() {
       id: 'blog-4',
     },
     update: {
-      image: '/psikolog.jpg',
+      image: '/kapak.jpg',
     },
     create: {
       id: 'blog-4',
@@ -203,7 +203,7 @@ async function main() {
         </ul>
       `,
       excerpt: 'Çocuklarda kaygı ve stres yönetimi hakkında bilgi edinin ve çocuğunuzun duygusal sağlığını desteklemek için pratik öneriler bulun.',
-      image: '/psikolog.jpg',
+      image: '/kapak.jpg',
       published: true,
       authorId: emineYildirim.id,
     },
@@ -214,7 +214,7 @@ async function main() {
       id: 'blog-5',
     },
     update: {
-      image: '/psikolog.jpg',
+      image: '/kapak.jpg',
     },
     create: {
       id: 'blog-5',
@@ -244,7 +244,7 @@ async function main() {
         </ul>
       `,
       excerpt: 'Ergenlik döneminde ebeveyn-çocuk iletişimini güçlendirmek için pratik öneriler ve stratejiler öğrenin.',
-      image: '/psikolog.jpg',
+      image: '/kapak.jpg',
       published: true,
       authorId: emineYildirim.id,
     },
@@ -255,7 +255,7 @@ async function main() {
       id: 'blog-6',
     },
     update: {
-      image: '/psikolog.jpg',
+      image: '/kapak.jpg',
     },
     create: {
       id: 'blog-6',
@@ -285,7 +285,7 @@ async function main() {
         </ul>
       `,
       excerpt: 'Çift ilişkilerinde çatışmaları sağlıklı bir şekilde yönetmek ve ilişkinizi güçlendirmek için pratik stratejiler öğrenin.',
-      image: '/psikolog.jpg',
+      image: '/kapak.jpg',
       published: true,
       authorId: emineYildirim.id,
     },
@@ -296,7 +296,7 @@ async function main() {
       id: 'blog-7',
     },
     update: {
-      image: '/psikolog.jpg',
+      image: '/kapak.jpg',
     },
     create: {
       id: 'blog-7',
@@ -326,7 +326,7 @@ async function main() {
         </ul>
       `,
       excerpt: 'Dijital dünyada çocuğunuzun güvenliğini sağlamak için kapsamlı bir rehber ve pratik öneriler bulun.',
-      image: '/psikolog.jpg',
+      image: '/kapak.jpg',
       published: true,
       authorId: emineYildirim.id,
     },
@@ -341,7 +341,7 @@ async function main() {
     create: {
       id: 'testimonial-1',
       name: 'Şule Ali',
-      email: 'sule.ali@example.com',
+      email: 'sule.ali@gmail.com',
       comment: 'Psikoloğa gitme konusunda başta çok tereddüt yaşamıştım, hep ertelediğim ama kendim için attığım en önemli adımdı. Emine hanımdan aldığım destek sayesinde kendimi daha iyi tanımaya başladım. Her seansı iple çekiyorum. Olaylara verdiğim tepkilerde ciddi değişimler oldu. Çok hoşgörülü, enerjisiyle, tebessümüyle insanın içini ısıtan mükemmel bir insan.',
       approved: true,
     },
@@ -353,7 +353,7 @@ async function main() {
     create: {
       id: 'testimonial-2',
       name: 'Ahmet Faik Altan',
-      email: 'ahmet.faik@example.com',
+      email: 'ahmet.faik@gmail.com',
       comment: 'Emine hanımla yolum kesiştiğinden bu yana yaşadığım psikolojik problemlerde çok yol katettim. Çok hoşgörülü işinde profesyonel, muhteşem bakış açısına sahip farkındalığı yüksek bir psikolog. İyi ki yolum kesişmiş.',
       approved: true,
     },
@@ -365,7 +365,7 @@ async function main() {
     create: {
       id: 'testimonial-3',
       name: 'Derya Eroğlu',
-      email: 'derya.eroglu@example.com',
+      email: 'derya.eroglu@gmail.com',
       comment: 'Emine Hanımdan kısa sürede son derece memnun kaldığımı belirtmek istiyorum. İlk günden itibaren sıcak, samimi ve profesyonel bir yaklaşım sergileyerek kendimi rahat hissetmemi sağladı. Görüşmelerde karşılaştığım zorlukları büyük bir dikkatle dinleyip anlamlandırdı ve içtenlikle çözüm yolları sundu.',
       approved: true,
     },
@@ -377,7 +377,7 @@ async function main() {
     create: {
       id: 'testimonial-4',
       name: 'Mehmet Yılmaz',
-      email: 'mehmet.yilmaz@example.com',
+      email: 'mehmet.yilmaz@gmail.com',
       comment: 'Emine hanım ile çalışmak hayatımda aldığım en iyi kararlardan biri oldu. Kendisi gerçekten çok anlayışlı ve profesyonel bir psikolog. Her seans sonrası kendimi daha iyi hissediyorum.',
       approved: true,
     },
@@ -389,7 +389,7 @@ async function main() {
     create: {
       id: 'testimonial-5',
       name: 'Ayşe Demir',
-      email: 'ayse.demir@example.com',
+      email: 'ayse.demir@gmail.com',
       comment: 'Emine hanıma çocuğumun okul sorunları için başvurduk. Çok sabırlı ve anlayışlı bir yaklaşım sergiledi. Hem çocuğum hem de biz aile olarak çok fayda gördük. Teşekkür ederiz.',
       approved: true,
     },
@@ -401,7 +401,7 @@ async function main() {
     create: {
       id: 'testimonial-6',
       name: 'Can Özkan',
-      email: 'can.ozkan@example.com',
+      email: 'can.ozkan@gmail.com',
       comment: 'İlişki problemlerimiz için Emine hanıma başvurduk. Çift terapisi sürecinde bize çok yardımcı oldu. Artık daha sağlıklı bir iletişim kurabiliyoruz. Herkese tavsiye ederim.',
       approved: true,
     },
@@ -413,7 +413,7 @@ async function main() {
     create: {
       id: 'testimonial-7',
       name: 'Zeynep Kaya',
-      email: 'zeynep.kaya@example.com',
+      email: 'zeynep.kaya@gmail.com',
       comment: 'Kaygı ve stres yönetimi konusunda Emine hanımdan çok destek aldım. Öğrendiğim teknikler sayesinde günlük hayatımda çok daha rahatım. Kendisi gerçekten çok bilgili ve yardımsever.',
       approved: true,
     },
@@ -425,7 +425,7 @@ async function main() {
     create: {
       id: 'testimonial-8',
       name: 'Burak Şahin',
-      email: 'burak.sahin@example.com',
+      email: 'burak.sahin@gmail.com',
       comment: 'Ergenlik dönemindeki oğlum için Emine hanıma başvurduk. Hem oğlum hem de biz ebeveynler olarak çok şey öğrendik. İletişimimiz çok daha iyi hale geldi.',
       approved: true,
     },
