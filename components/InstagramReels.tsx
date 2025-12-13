@@ -94,7 +94,7 @@ export default function InstagramReels({ reels }: InstagramReelsProps) {
               <div
                 key={reel.id}
                 data-reel-id={reel.id}
-                className="rounded-lg overflow-hidden cursor-pointer"
+                className="rounded-2xl overflow-hidden cursor-pointer border-2 border-[#764e45]/30 shadow-lg bg-white"
                 onClick={() => handleReelClick(reel.url)}
               >
                 <div className="aspect-[9/16] bg-gray-200 relative overflow-hidden">
@@ -103,6 +103,7 @@ export default function InstagramReels({ reels }: InstagramReelsProps) {
                       src={embedUrl}
                       className="w-full h-full"
                       allow="encrypted-media; autoplay;"
+                      scrolling="no"
                       title={reel.title || 'Instagram Reel'}
                       loading="lazy"
                       style={{
