@@ -28,8 +28,8 @@ export default function AboutProfile() {
                 />
               </div>
 
-              {/* Alıntı - Fotoğrafın üstüne overlay, beyaz arka plan üzerine siyah yazı */}
-              <div className="absolute bottom-2 md:bottom-4 left-1/2 transform -translate-x-1/2 bg-white p-4 md:p-6 lg:p-8 rounded-lg shadow-lg w-[calc(100%-2rem)] md:max-w-sm lg:max-w-md">
+              {/* Alıntı - Mobilde fotoğrafın altında, büyük ekranlarda ortalı overlay */}
+              <div className="relative mt-4 bg-white p-4 md:p-6 lg:p-8 rounded-lg shadow-lg w-full md:max-w-sm lg:max-w-md lg:w-[calc(100%-2rem)] lg:absolute lg:bottom-2 lg:left-1/2 lg:-translate-x-1/2 lg:mt-0">
               <div className="mb-8">
             <svg
               className="w-16 h-16 mx-auto text-[#764e45]"

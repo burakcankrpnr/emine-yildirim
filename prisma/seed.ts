@@ -58,7 +58,7 @@ async function main() {
       id: 'blog-1',
     },
     update: {
-      image: '/kapak.jpg',
+      image: '/logo3.png',
     },
     create: {
       id: 'blog-1',
@@ -81,7 +81,7 @@ async function main() {
         <p>Çocuğunuzla açık iletişim kurun. Onu dinleyin ve duygularını ciddiye alın. Okul yönetimiyle iletişime geçin ve durumu bildirin. Çocuğunuza güvenli alanlar yaratın ve profesyonel destek almayı düşünün.</p>
       `,
       excerpt: 'Akran zorbalığı, çocukların okul hayatında karşılaşabileceği ciddi bir sorundur. Bu yazıda, çocuğunuzu zorbalıktan korumak için pratik öneriler bulacaksınız.',
-      image: '/kapak.jpg',
+      image: '/logo3.png',
       published: true,
       authorId: emineYildirim.id,
     },
@@ -92,7 +92,7 @@ async function main() {
       id: 'blog-2',
     },
     update: {
-      image: '/kapak.jpg',
+      image: '/logo3.png',
     },
     create: {
       id: 'blog-2',
@@ -122,7 +122,7 @@ async function main() {
         </ul>
       `,
       excerpt: 'TikTok gibi sosyal medya platformlarının çocuklar için güvenli kullanımı hakkında bilgi edinin ve çocuğunuzu nasıl koruyabileceğinizi öğrenin.',
-      image: '/kapak.jpg',
+      image: '/logo3.png',
       published: true,
       authorId: emineYildirim.id,
     },
@@ -133,7 +133,7 @@ async function main() {
       id: 'blog-3',
     },
     update: {
-      image: '/kapak.jpg',
+      image: '/logo3.png',
     },
     create: {
       id: 'blog-3',
@@ -162,7 +162,7 @@ async function main() {
         </ul>
       `,
       excerpt: 'Çocuğunuzun TikTok kullanımında karşılaşabileceğiniz kriz durumları için hazırlıklı olun. 10 dakikalık kriz planı ile hızlı ve etkili müdahale edin.',
-      image: '/kapak.jpg',
+      image: '/logo3.png',
       published: true,
       authorId: emineYildirim.id,
     },
@@ -173,7 +173,7 @@ async function main() {
       id: 'blog-4',
     },
     update: {
-      image: '/kapak.jpg',
+      image: '/logo3.png',
     },
     create: {
       id: 'blog-4',
@@ -203,7 +203,7 @@ async function main() {
         </ul>
       `,
       excerpt: 'Çocuklarda kaygı ve stres yönetimi hakkında bilgi edinin ve çocuğunuzun duygusal sağlığını desteklemek için pratik öneriler bulun.',
-      image: '/kapak.jpg',
+      image: '/logo3.png',
       published: true,
       authorId: emineYildirim.id,
     },
@@ -214,7 +214,7 @@ async function main() {
       id: 'blog-5',
     },
     update: {
-      image: '/kapak.jpg',
+      image: '/logo3.png',
     },
     create: {
       id: 'blog-5',
@@ -244,7 +244,7 @@ async function main() {
         </ul>
       `,
       excerpt: 'Ergenlik döneminde ebeveyn-çocuk iletişimini güçlendirmek için pratik öneriler ve stratejiler öğrenin.',
-      image: '/kapak.jpg',
+      image: '/logo3.png',
       published: true,
       authorId: emineYildirim.id,
     },
@@ -255,7 +255,7 @@ async function main() {
       id: 'blog-6',
     },
     update: {
-      image: '/kapak.jpg',
+      image: '/logo3.png',
     },
     create: {
       id: 'blog-6',
@@ -285,7 +285,7 @@ async function main() {
         </ul>
       `,
       excerpt: 'Çift ilişkilerinde çatışmaları sağlıklı bir şekilde yönetmek ve ilişkinizi güçlendirmek için pratik stratejiler öğrenin.',
-      image: '/kapak.jpg',
+      image: '/logo3.png',
       published: true,
       authorId: emineYildirim.id,
     },
@@ -296,7 +296,7 @@ async function main() {
       id: 'blog-7',
     },
     update: {
-      image: '/kapak.jpg',
+      image: '/logo3.png',
     },
     create: {
       id: 'blog-7',
@@ -326,7 +326,7 @@ async function main() {
         </ul>
       `,
       excerpt: 'Dijital dünyada çocuğunuzun güvenliğini sağlamak için kapsamlı bir rehber ve pratik öneriler bulun.',
-      image: '/kapak.jpg',
+      image: '/logo3.png',
       published: true,
       authorId: emineYildirim.id,
     },

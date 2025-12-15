@@ -136,7 +136,7 @@ export default function CounselingServices() {
             {/* Sağ Sütun - Fotoğraf ve Video Butonu */}
             <div className="relative w-full aspect-[3/4] lg:aspect-auto lg:h-full min-h-[400px] lg:min-h-[600px] group cursor-pointer">
               <Image
-                src="/kapak.jpg"
+                src="/onlinedanismanlik.jpg"
                 alt="Online Psikolojik Danışmanlık"
                 fill
                 className="object-cover"
@@ -206,6 +206,7 @@ export default function CounselingServices() {
           <div className="relative w-full h-full flex items-center justify-center">
             <video
               src="/online-terapi-final.mp4"
+              poster="/onlinedanismanlik.jpg"
               controls
               autoPlay
               className="w-full h-full object-contain rounded-lg"

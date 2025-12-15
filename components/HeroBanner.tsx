@@ -1,30 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { FaWhatsapp, FaPhone } from 'react-icons/fa'
 
 export default function HeroBanner() {
-  const [currentSlide, setCurrentSlide] = useState(0)
-
-  // Slider için arka plan görselleri - kullanıcı kendi görsellerini ekleyebilir
-  const sliderImages = [
-    '/kapak.jpg', // Placeholder - kullanıcı kendi görsellerini ekleyecek
-    '/kapak.jpg', // İkinci slide için
-  ]
-
-  // Otomatik slider geçişi
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % sliderImages.length)
-    }, 5000) // 5 saniyede bir geçiş
-
-    return () => clearInterval(interval)
-  }, [sliderImages.length])
-
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index)
-  }
 
   // Metni karakterlerine ayırıp animasyonlu render eden fonksiyon
   const renderAnimatedText = (text: string, baseDelay: number = 0, delayPerChar: number = 30) => {
@@ -53,25 +32,17 @@ export default function HeroBanner() {
   return (
     <>
       <section className="relative h-screen min-h-[600px] overflow-hidden">
-        {/* Arka plan slider */}
+        {/* Arka plan video */}
         <div className="absolute inset-0 z-0">
-          {sliderImages.map((image, index) => (
-            <div
-              key={index}
-              className={`absolute inset-0 transition-opacity duration-1000 ${
-                index === currentSlide ? 'opacity-100' : 'opacity-0'
-              }`}
-            >
-              <div className="absolute inset-0 bg-black/20" />
-              <Image
-                src={image}
-                alt={`Slider ${index + 1}`}
-                fill
-                className="object-cover blur-sm"
-                priority={index === 0}
-              />
-            </div>
-          ))}
+          <video
+            className="w-full h-full object-cover"
+            src="/bannervideo.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+          <div className="absolute inset-0 bg-black/20" />
         </div>
 
         {/* İçerik */}
@@ -86,7 +57,7 @@ export default function HeroBanner() {
                 </p>
 
                 {/* Ana başlık */}
-                <h1 className="text-3xl md:text-5xl lg:text-6xl font-serif text-white leading-tight">
+                <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-serif text-white leading-tight">
                   {renderAnimatedText('Birlikte güçlü adımlar atalım', 300, 40)}
                 </h1>
 
@@ -111,21 +82,6 @@ export default function HeroBanner() {
                   </a>
                 </div>
 
-                {/* Slider göstergeleri */}
-                <div className="flex gap-2 pt-4 animate-fade-in-up animation-delay-800">
-                  {sliderImages.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => goToSlide(index)}
-                      className={`w-3 h-3 rounded-full transition-all ${
-                        index === currentSlide
-                          ? 'bg-white'
-                          : 'bg-white/30 border border-white/50'
-                      }`}
-                      aria-label={`Slide ${index + 1}`}
-                    />
-                  ))}
-                </div>
               </div>
             </div>
           </div>
