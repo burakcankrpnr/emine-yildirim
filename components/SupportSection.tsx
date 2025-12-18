@@ -11,6 +11,7 @@ export default function SupportSection() {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const modalVideoRef = useRef<HTMLVideoElement>(null)
 
   const animatePercentages = useCallback(() => {
     const duration = 2000 // 2 saniye
@@ -80,6 +81,62 @@ export default function SupportSection() {
       document.body.style.overflow = 'unset'
     }
   }, [])
+
+  // Video otomatik oynatma için (mobil cihazlar)
+  useEffect(() => {
+    const video = videoRef.current
+    if (video) {
+      // Mobil cihazlar için video oynatmayı zorla
+      video.muted = true
+      video.playsInline = true
+      
+      const playVideo = () => {
+        video.play().catch((error) => {
+          console.log('Video otomatik oynatma engellendi:', error)
+          // Kullanıcı etkileşimi sonrası tekrar dene
+          document.addEventListener('touchstart', () => {
+            video.play()
+          }, { once: true })
+        })
+      }
+
+      // Video yüklendiğinde oynat
+      if (video.readyState >= 3) {
+        playVideo()
+      } else {
+        video.addEventListener('loadeddata', playVideo)
+      }
+
+      return () => {
+        video.removeEventListener('loadeddata', playVideo)
+      }
+    }
+  }, [])
+
+  // Modal video otomatik oynatma için (mobil cihazlar)
+  useEffect(() => {
+    if (isVideoModalOpen) {
+      const modalVideo = modalVideoRef.current
+      if (modalVideo) {
+        const playModalVideo = () => {
+          modalVideo.play().catch((error) => {
+            console.log('Modal video otomatik oynatma engellendi:', error)
+          })
+        }
+
+        // Video yüklendiğinde oynat
+        if (modalVideo.readyState >= 3) {
+          playModalVideo()
+        } else {
+          modalVideo.addEventListener('loadeddata', playModalVideo)
+        }
+
+        return () => {
+          modalVideo.removeEventListener('loadeddata', playModalVideo)
+        }
+      }
+    }
+  }, [isVideoModalOpen])
 
   // ESC tuşu ile modal'ı kapat
   useEffect(() => {
@@ -197,6 +254,8 @@ export default function SupportSection() {
               muted
               loop
               playsInline
+              preload="auto"
+              disablePictureInPicture
               className="absolute inset-0 w-full h-full object-cover"
             />
             {/* Overlay ve Oynat Butonu */}
@@ -247,9 +306,12 @@ export default function SupportSection() {
             </button>
             {/* Video Player */}
             <video
+              ref={modalVideoRef}
               src="/deneme.mp4"
               controls
               autoPlay
+              playsInline
+              preload="auto"
               className="w-full h-full object-contain rounded-lg"
               style={{ maxHeight: '95vh' }}
             >

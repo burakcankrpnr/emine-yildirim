@@ -1,10 +1,44 @@
 import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import { Metadata } from 'next'
 
 // Kategori sayfasını dinamik yap
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string }
+}): Promise<Metadata> {
+  const category = await prisma.forumCategory.findUnique({
+    where: { slug: params.slug },
+  })
+
+  if (!category) {
+    return {
+      title: 'Kategori Bulunamadı',
+    }
+  }
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://psikologemineyildirim.com.tr'
+  const categoryUrl = `${siteUrl}/forum/${params.slug}`
+
+  return {
+    title: `${category.name} - Forum`,
+    description: category.description || `${category.name} kategorisindeki tüm konuları görüntüleyin. Psikolog Emine Yıldırım forum sayfasında sorularınızı sorun ve deneyimlerinizi paylaşın.`,
+    openGraph: {
+      title: `${category.name} - Forum | Psikolog Emine Yıldırım`,
+      description: category.description || `${category.name} kategorisindeki tüm konuları görüntüleyin.`,
+      url: categoryUrl,
+      type: 'website',
+    },
+    alternates: {
+      canonical: `/forum/${params.slug}`,
+    },
+  }
+}
 
 export default async function ForumCategoryPage({
   params,

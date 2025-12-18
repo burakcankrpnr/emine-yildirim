@@ -1,9 +1,24 @@
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
+import { Metadata } from 'next'
 
 // Forum anasayfasını dinamik yap
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
+
+export const metadata: Metadata = {
+  title: 'Forum - Psikoloji Tartışmaları',
+  description: 'Psikoloji, aile danışmanlığı, çocuk psikolojisi ve daha fazlası hakkında uzman görüşleri ve tartışmalar. Sorularınızı sorun, deneyimlerinizi paylaşın.',
+  keywords: ['psikoloji forumu', 'aile danışmanlığı', 'çocuk psikolojisi', 'ergen psikolojisi', 'psikolojik destek'],
+  openGraph: {
+    title: 'Forum - Psikoloji Tartışmaları | Psikolog Emine Yıldırım',
+    description: 'Psikoloji, aile danışmanlığı, çocuk psikolojisi ve daha fazlası hakkında uzman görüşleri ve tartışmalar.',
+    type: 'website',
+  },
+  alternates: {
+    canonical: '/forum',
+  },
+}
 
 export default async function ForumPage() {
   const categories = await prisma.forumCategory.findMany({

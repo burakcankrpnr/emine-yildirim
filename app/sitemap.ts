@@ -25,6 +25,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/forum`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/iletisim`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
@@ -94,7 +100,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     }))
 
-    return [...staticPages, ...blogPages, ...forumPages]
+    // Forum topic'leri
+    const forumTopics = await prisma.forumTopic.findMany({
+      select: {
+        id: true,
+        updatedAt: true,
+      },
+    })
+
+    const forumTopicPages: MetadataRoute.Sitemap = forumTopics.map((topic) => ({
+      url: `${baseUrl}/forum/topic/${topic.id}`,
+      lastModified: topic.updatedAt,
+      changeFrequency: 'weekly',
+      priority: 0.5,
+    }))
+
+    return [...staticPages, ...blogPages, ...forumPages, ...forumTopicPages]
   } catch (error) {
     console.error('Sitemap oluşturulurken hata:', error)
     return staticPages

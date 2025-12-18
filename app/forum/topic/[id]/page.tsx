@@ -1,10 +1,58 @@
 import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import ForumReplies from '@/components/ForumReplies'
+import { Metadata } from 'next'
 
 // Konu detay sayfasını dinamik yap
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string }
+}): Promise<Metadata> {
+  const topic = await prisma.forumTopic.findUnique({
+    where: { id: params.id },
+    include: {
+      author: true,
+      category: true,
+    },
+  })
+
+  if (!topic) {
+    return {
+      title: 'Konu Bulunamadı',
+    }
+  }
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://psikologemineyildirim.com.tr'
+  const topicUrl = `${siteUrl}/forum/topic/${params.id}`
+  const description = topic.content.substring(0, 160).replace(/\n/g, ' ')
+
+  return {
+    title: topic.title,
+    description: description,
+    keywords: [topic.category.name, 'psikoloji forumu', 'tartışma'],
+    authors: [{ name: topic.author.name }],
+    openGraph: {
+      title: `${topic.title} | ${topic.category.name}`,
+      description: description,
+      url: topicUrl,
+      type: 'article',
+      publishedTime: topic.createdAt.toISOString(),
+      authors: [topic.author.name],
+    },
+    twitter: {
+      card: 'summary',
+      title: topic.title,
+      description: description,
+    },
+    alternates: {
+      canonical: `/forum/topic/${params.id}`,
+    },
+  }
+}
 
 export default async function ForumTopicPage({
   params,

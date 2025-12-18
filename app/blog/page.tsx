@@ -9,7 +9,16 @@ export const revalidate = 0
 
 export const metadata: Metadata = {
   title: 'Blog Yazıları - Psikolog Emine Yıldırım',
-  description: 'Psikoloji, danışmanlık ve kişisel gelişim konularında güncel blog yazıları',
+  description: 'Psikoloji, danışmanlık ve kişisel gelişim konularında güncel blog yazıları. Her hafta psikoloji için motivasyon kaynağı yazılar.',
+  keywords: ['psikoloji blog', 'kişisel gelişim', 'psikolojik danışmanlık yazıları', 'ruh sağlığı blog', 'antalya psikolog blog'],
+  openGraph: {
+    title: 'Blog Yazıları | Psikolog Emine Yıldırım',
+    description: 'Psikoloji, danışmanlık ve kişisel gelişim konularında güncel blog yazıları.',
+    type: 'website',
+  },
+  alternates: {
+    canonical: '/blog',
+  },
 }
 
 const POSTS_PER_PAGE = 6

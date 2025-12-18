@@ -2,7 +2,16 @@ import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Aile ve Çift Danışmanlığı - Psikolog Emine Yıldırım',
-  description: 'Aile ve Çift Danışmanlığı hizmetleri. İlişki problemleri, iletişim sorunları ve aile içi çatışmalar için profesyonel destek.',
+  description: 'Aile ve Çift Danışmanlığı hizmetleri. İlişki problemleri, iletişim sorunları ve aile içi çatışmalar için profesyonel destek. Antalya çift terapisi.',
+  keywords: ['çift terapisi', 'aile danışmanlığı', 'evlilik terapisi', 'ilişki terapisi', 'iletişim sorunları', 'antalya çift terapisi'],
+  openGraph: {
+    title: 'Aile ve Çift Danışmanlığı | Psikolog Emine Yıldırım',
+    description: 'İlişki problemleri, iletişim sorunları ve aile içi çatışmalar için profesyonel destek.',
+    type: 'website',
+  },
+  alternates: {
+    canonical: '/danismanliklar/cift-ve-aile-danismanligi',
+  },
 }
 
 export default function CoupleFamilyCounselingPage() {

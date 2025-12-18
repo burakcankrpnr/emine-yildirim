@@ -2,8 +2,41 @@
 
 import Image from 'next/image'
 import { FaWhatsapp, FaPhone } from 'react-icons/fa'
+import { useEffect, useRef } from 'react'
 
 export default function HeroBanner() {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  // Video otomatik oynatma için
+  useEffect(() => {
+    const video = videoRef.current
+    if (video) {
+      // Mobil cihazlar için video oynatmayı zorla
+      video.muted = true
+      video.playsInline = true
+      
+      const playVideo = () => {
+        video.play().catch((error) => {
+          console.log('Video otomatik oynatma engellendi:', error)
+          // Kullanıcı etkileşimi sonrası tekrar dene
+          document.addEventListener('touchstart', () => {
+            video.play()
+          }, { once: true })
+        })
+      }
+
+      // Video yüklendiğinde oynat
+      if (video.readyState >= 3) {
+        playVideo()
+      } else {
+        video.addEventListener('loadeddata', playVideo)
+      }
+
+      return () => {
+        video.removeEventListener('loadeddata', playVideo)
+      }
+    }
+  }, [])
 
   // Metni karakterlerine ayırıp animasyonlu render eden fonksiyon
   const renderAnimatedText = (text: string, baseDelay: number = 0, delayPerChar: number = 30) => {
@@ -35,12 +68,15 @@ export default function HeroBanner() {
         {/* Arka plan video */}
         <div className="absolute inset-0 z-0">
           <video
+            ref={videoRef}
             className="w-full h-full object-cover"
             src="/bannervideo.mp4"
             autoPlay
             muted
             loop
             playsInline
+            preload="auto"
+            disablePictureInPicture
           />
           <div className="absolute inset-0 bg-black/20" />
         </div>

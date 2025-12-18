@@ -4,7 +4,16 @@ import EducationTimeline from '@/components/EducationTimeline'
 import HealingQuote from '@/components/HealingQuote'
 export const metadata: Metadata = {
   title: 'Hakkımda - Psikolog Emine Yıldırım',
-  description: ' Psikolog Emine Yıldırım hakkında bilgi edinin. Yetişkin, çocuk, ergen ve aile psikolojisi alanlarında uzman hizmet.',
+  description: 'Psikolog Emine Yıldırım hakkında bilgi edinin. Yetişkin, çocuk, ergen ve aile psikolojisi alanlarında uzman hizmet. Antalya psikolojik danışman.',
+  keywords: ['emine yıldırım', 'psikolog antalya', 'psikolojik danışman', 'klinik psikolog', 'antalya terapi'],
+  openGraph: {
+    title: 'Hakkımda | Psikolog Emine Yıldırım',
+    description: 'Yetişkin, çocuk, ergen ve aile psikolojisi alanlarında uzman hizmet.',
+    type: 'profile',
+  },
+  alternates: {
+    canonical: '/hakkimda',
+  },
 }
 
 export default function AboutPage() {

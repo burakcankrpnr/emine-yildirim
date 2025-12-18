@@ -3,7 +3,16 @@ import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'İletişim - Psikolog Emine Yıldırım',
-  description: 'Sorularınız, önerileriniz veya talepleriniz için bizimle iletişime geçin. Size yardımcı olmaktan mutluluk duyarız.',
+  description: 'Sorularınız, önerileriniz veya talepleriniz için bizimle iletişime geçin. Size yardımcı olmaktan mutluluk duyarız. Antalya psikolojik danışmanlık randevusu.',
+  keywords: ['iletişim', 'randevu', 'psikolog randevusu', 'antalya psikolog iletişim', 'online terapi randevusu'],
+  openGraph: {
+    title: 'İletişim | Psikolog Emine Yıldırım',
+    description: 'Sorularınız için bizimle iletişime geçin.',
+    type: 'website',
+  },
+  alternates: {
+    canonical: '/iletisim',
+  },
 }
 
 export default function ContactPage() {

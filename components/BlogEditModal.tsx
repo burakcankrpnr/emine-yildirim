@@ -264,6 +264,7 @@ export default function BlogEditModal({ isOpen, onClose, post }: BlogEditModalPr
               )}
               {imagePreview && (
                 <div className="mt-2">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={imagePreview}
                     alt="Preview"

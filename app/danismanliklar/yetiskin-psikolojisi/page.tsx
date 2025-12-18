@@ -2,7 +2,16 @@ import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Yetişkin Psikolojisi - Psikolog Emine Yıldırım',
-  description: 'Yetişkin psikolojisi hizmetleri. Depresyon, kaygı, stres ve yaşam dönemleri sorunları için profesyonel psikolojik destek.',
+  description: 'Yetişkin psikolojisi hizmetleri. Depresyon, kaygı, stres ve yaşam dönemleri sorunları için profesyonel psikolojik destek. Antalya yetişkin terapisi.',
+  keywords: ['yetişkin psikolojisi', 'yetişkin terapisi', 'depresyon tedavisi', 'kaygı tedavisi', 'stres yönetimi', 'antalya psikolog'],
+  openGraph: {
+    title: 'Yetişkin Psikolojisi | Psikolog Emine Yıldırım',
+    description: 'Depresyon, kaygı, stres ve yaşam dönemleri sorunları için profesyonel psikolojik destek.',
+    type: 'website',
+  },
+  alternates: {
+    canonical: '/danismanliklar/yetiskin-psikolojisi',
+  },
 }
 
 export default function AdultPsychologyPage() {
