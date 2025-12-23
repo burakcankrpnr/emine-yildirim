@@ -11,7 +11,7 @@ try {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Her iki domain için de çalışacak şekilde baseUrl'i al
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://psikologemineyildirim.com.tr'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://psikologemineyildirim.com'
   
   // Tarih formatını ISO string'e çeviriyoruz
   const now = new Date().toISOString()
