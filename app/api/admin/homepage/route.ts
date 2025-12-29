@@ -45,55 +45,39 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
 
+    // undefined değerleri null'a çevir (Prisma undefined'ı görmezden gelir, null ise alanı temizler)
+    const data: any = {
+      heroSubHeading: body.heroSubHeading !== undefined ? body.heroSubHeading : null,
+      heroMainHeading: body.heroMainHeading !== undefined ? body.heroMainHeading : null,
+      heroDescription: body.heroDescription !== undefined ? body.heroDescription : null,
+      heroButton1Text: body.heroButton1Text !== undefined ? body.heroButton1Text : null,
+      heroButton1Link: body.heroButton1Link !== undefined ? body.heroButton1Link : null,
+      heroButton2Text: body.heroButton2Text !== undefined ? body.heroButton2Text : null,
+      heroButton2Link: body.heroButton2Link !== undefined ? body.heroButton2Link : null,
+      heroVideoUrl: body.heroVideoUrl !== undefined ? body.heroVideoUrl : null,
+      leftBoxTitle: body.leftBoxTitle !== undefined ? body.leftBoxTitle : null,
+      leftBoxDescription: body.leftBoxDescription !== undefined ? body.leftBoxDescription : null,
+      leftBoxExpertiseTitle: body.leftBoxExpertiseTitle !== undefined ? body.leftBoxExpertiseTitle : null,
+      rightBoxTitle: body.rightBoxTitle !== undefined ? body.rightBoxTitle : null,
+      rightBoxDescription: body.rightBoxDescription !== undefined ? body.rightBoxDescription : null,
+      quoteText: body.quoteText !== undefined ? body.quoteText : null,
+      quoteAuthor: body.quoteAuthor !== undefined ? body.quoteAuthor : null,
+      supportSectionVideoUrl: body.supportSectionVideoUrl !== undefined ? body.supportSectionVideoUrl : null,
+      counselingVideoUrl: body.counselingVideoUrl !== undefined ? body.counselingVideoUrl : null,
+      counselingVideoPoster: body.counselingVideoPoster !== undefined ? body.counselingVideoPoster : null,
+    }
+
     // Tek bir settings kaydı kullan (yoksa oluştur)
     let settings = await prisma.homepageSettings.findFirst()
 
     if (settings) {
       settings = await prisma.homepageSettings.update({
         where: { id: settings.id },
-        data: {
-          heroSubHeading: body.heroSubHeading,
-          heroMainHeading: body.heroMainHeading,
-          heroDescription: body.heroDescription,
-          heroButton1Text: body.heroButton1Text,
-          heroButton1Link: body.heroButton1Link,
-          heroButton2Text: body.heroButton2Text,
-          heroButton2Link: body.heroButton2Link,
-          heroVideoUrl: body.heroVideoUrl,
-          leftBoxTitle: body.leftBoxTitle,
-          leftBoxDescription: body.leftBoxDescription,
-          leftBoxExpertiseTitle: body.leftBoxExpertiseTitle,
-          rightBoxTitle: body.rightBoxTitle,
-          rightBoxDescription: body.rightBoxDescription,
-          quoteText: body.quoteText,
-          quoteAuthor: body.quoteAuthor,
-          supportSectionVideoUrl: body.supportSectionVideoUrl,
-          counselingVideoUrl: body.counselingVideoUrl,
-          counselingVideoPoster: body.counselingVideoPoster,
-        },
+        data,
       })
     } else {
       settings = await prisma.homepageSettings.create({
-        data: {
-          heroSubHeading: body.heroSubHeading,
-          heroMainHeading: body.heroMainHeading,
-          heroDescription: body.heroDescription,
-          heroButton1Text: body.heroButton1Text,
-          heroButton1Link: body.heroButton1Link,
-          heroButton2Text: body.heroButton2Text,
-          heroButton2Link: body.heroButton2Link,
-          heroVideoUrl: body.heroVideoUrl,
-          leftBoxTitle: body.leftBoxTitle,
-          leftBoxDescription: body.leftBoxDescription,
-          leftBoxExpertiseTitle: body.leftBoxExpertiseTitle,
-          rightBoxTitle: body.rightBoxTitle,
-          rightBoxDescription: body.rightBoxDescription,
-          quoteText: body.quoteText,
-          quoteAuthor: body.quoteAuthor,
-          supportSectionVideoUrl: body.supportSectionVideoUrl,
-          counselingVideoUrl: body.counselingVideoUrl,
-          counselingVideoPoster: body.counselingVideoPoster,
-        },
+        data,
       })
     }
 

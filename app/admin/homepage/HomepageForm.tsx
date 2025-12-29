@@ -156,8 +156,9 @@ export default function HomepageForm({
         url = videoSettings.counselingVideoPoster
       }
 
-      if (!url) {
+      if (!url || url.trim() === '') {
         showToast('Silinecek dosya bulunamadı', 'error')
+        setDeletingVideo(null)
         return
       }
 
@@ -170,52 +171,53 @@ export default function HomepageForm({
       )
 
       if (response.ok) {
-        // State'i temizle - undefined yap (local dosya fallback yok)
+        // Önce state'i temizle - functional update kullan
+        let updatedHeroSettings = heroSettings
+        let updatedVideoSettings = videoSettings
+        
         if (videoType === 'hero') {
-          setHeroSettings({ ...heroSettings, videoUrl: undefined })
-          setVideoSettings({ ...videoSettings, heroVideoUrl: undefined })
+          updatedHeroSettings = { ...heroSettings, videoUrl: undefined }
+          updatedVideoSettings = { ...videoSettings, heroVideoUrl: undefined }
+          setHeroSettings(updatedHeroSettings)
+          setVideoSettings(updatedVideoSettings)
         } else if (videoType === 'support') {
-          setVideoSettings({ ...videoSettings, supportSectionVideoUrl: undefined })
+          updatedVideoSettings = { ...videoSettings, supportSectionVideoUrl: undefined }
+          setVideoSettings(updatedVideoSettings)
         } else if (videoType === 'counseling') {
-          setVideoSettings({ ...videoSettings, counselingVideoUrl: undefined })
+          updatedVideoSettings = { ...videoSettings, counselingVideoUrl: undefined }
+          setVideoSettings(updatedVideoSettings)
         } else if (videoType === 'poster') {
-          setVideoSettings({ ...videoSettings, counselingVideoPoster: undefined })
+          updatedVideoSettings = { ...videoSettings, counselingVideoPoster: undefined }
+          setVideoSettings(updatedVideoSettings)
         }
         
         // Veritabanına kaydet - güncel state ile
-        const updatedHeroSettings = videoType === 'hero' 
-          ? { ...heroSettings, videoUrl: undefined }
-          : heroSettings
-        const updatedVideoSettings = 
-          videoType === 'hero' ? { ...videoSettings, heroVideoUrl: undefined }
-          : videoType === 'support' ? { ...videoSettings, supportSectionVideoUrl: undefined }
-          : videoType === 'counseling' ? { ...videoSettings, counselingVideoUrl: undefined }
-          : videoType === 'poster' ? { ...videoSettings, counselingVideoPoster: undefined }
-          : videoSettings
+        // undefined değerleri null'a çevir (Prisma undefined'ı görmezden gelir)
+        const saveData: any = {
+          heroSubHeading: updatedHeroSettings.subHeading || null,
+          heroMainHeading: updatedHeroSettings.mainHeading || null,
+          heroDescription: updatedHeroSettings.description || null,
+          heroButton1Text: updatedHeroSettings.button1Text || null,
+          heroButton1Link: updatedHeroSettings.button1Link || null,
+          heroButton2Text: updatedHeroSettings.button2Text || null,
+          heroButton2Link: updatedHeroSettings.button2Link || null,
+          heroVideoUrl: updatedHeroSettings.videoUrl || null,
+          leftBoxTitle: boxSettings.leftBoxTitle || null,
+          leftBoxDescription: boxSettings.leftBoxDescription || null,
+          leftBoxExpertiseTitle: boxSettings.leftBoxExpertiseTitle || null,
+          rightBoxTitle: boxSettings.rightBoxTitle || null,
+          rightBoxDescription: boxSettings.rightBoxDescription || null,
+          quoteText: quoteSettings.quote || null,
+          quoteAuthor: quoteSettings.author || null,
+          supportSectionVideoUrl: updatedVideoSettings.supportSectionVideoUrl || null,
+          counselingVideoUrl: updatedVideoSettings.counselingVideoUrl || null,
+          counselingVideoPoster: updatedVideoSettings.counselingVideoPoster || null,
+        }
         
         const saveResponse = await fetch('/api/admin/homepage', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            heroSubHeading: updatedHeroSettings.subHeading,
-            heroMainHeading: updatedHeroSettings.mainHeading,
-            heroDescription: updatedHeroSettings.description,
-            heroButton1Text: updatedHeroSettings.button1Text,
-            heroButton1Link: updatedHeroSettings.button1Link,
-            heroButton2Text: updatedHeroSettings.button2Text,
-            heroButton2Link: updatedHeroSettings.button2Link,
-            heroVideoUrl: updatedHeroSettings.videoUrl,
-            leftBoxTitle: boxSettings.leftBoxTitle,
-            leftBoxDescription: boxSettings.leftBoxDescription,
-            leftBoxExpertiseTitle: boxSettings.leftBoxExpertiseTitle,
-            rightBoxTitle: boxSettings.rightBoxTitle,
-            rightBoxDescription: boxSettings.rightBoxDescription,
-            quoteText: quoteSettings.quote,
-            quoteAuthor: quoteSettings.author,
-            supportSectionVideoUrl: updatedVideoSettings.supportSectionVideoUrl,
-            counselingVideoUrl: updatedVideoSettings.counselingVideoUrl,
-            counselingVideoPoster: updatedVideoSettings.counselingVideoPoster,
-          }),
+          body: JSON.stringify(saveData),
         })
         
         if (saveResponse.ok) {
@@ -603,7 +605,7 @@ export default function HomepageForm({
                     // Input'u temizle ki aynı dosya tekrar seçilebilsin
                     e.target.value = ''
                   }}
-                  disabled={uploadingVideo === 'support'}
+                  disabled={uploadingVideo === 'support' || deletingVideo === 'support'}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-dark disabled:opacity-50"
                 />
                 <div className="bg-blue-50 border border-blue-200 p-3 rounded-lg text-xs text-gray-700 space-y-1">
@@ -669,7 +671,7 @@ export default function HomepageForm({
                     // Input'u temizle ki aynı dosya tekrar seçilebilsin
                     e.target.value = ''
                   }}
-                  disabled={uploadingVideo === 'counseling'}
+                  disabled={uploadingVideo === 'counseling' || deletingVideo === 'counseling'}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-dark disabled:opacity-50"
                 />
                 <div className="bg-blue-50 border border-blue-200 p-3 rounded-lg text-xs text-gray-700 space-y-1">

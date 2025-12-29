@@ -119,28 +119,46 @@ export default function SupportSection({ videoUrl }: SupportSectionProps) {
 
   // Modal video otomatik oynatma için (mobil cihazlar)
   useEffect(() => {
-    if (isVideoModalOpen) {
+    if (isVideoModalOpen && videoUrl) {
       const modalVideo = modalVideoRef.current
       if (modalVideo) {
-        const playModalVideo = () => {
-          modalVideo.play().catch((error) => {
+        // Video kaynağını yükle
+        modalVideo.load()
+        
+        const playModalVideo = async () => {
+          try {
+            // Video hazır olana kadar bekle
+            if (modalVideo.readyState < 3) {
+              await new Promise((resolve) => {
+                const handler = () => {
+                  modalVideo.removeEventListener('canplay', handler)
+                  resolve(undefined)
+                }
+                modalVideo.addEventListener('canplay', handler)
+              })
+            }
+            
+            await modalVideo.play()
+          } catch (error) {
             console.log('Modal video otomatik oynatma engellendi:', error)
-          })
+          }
         }
 
         // Video yüklendiğinde oynat
         if (modalVideo.readyState >= 3) {
           playModalVideo()
         } else {
-          modalVideo.addEventListener('loadeddata', playModalVideo)
+          modalVideo.addEventListener('canplay', playModalVideo, { once: true })
+          modalVideo.addEventListener('loadeddata', playModalVideo, { once: true })
         }
 
         return () => {
+          modalVideo.removeEventListener('canplay', playModalVideo)
           modalVideo.removeEventListener('loadeddata', playModalVideo)
         }
       }
     }
-  }, [isVideoModalOpen])
+  }, [isVideoModalOpen, videoUrl])
 
   // ESC tuşu ile modal'ı kapat
   useEffect(() => {
@@ -317,18 +335,31 @@ export default function SupportSection({ videoUrl }: SupportSectionProps) {
               </svg>
             </button>
             {/* Video Player */}
-            <video
-              ref={modalVideoRef}
-              src="/deneme.mp4"
-              controls
-              autoPlay
-              playsInline
-              preload="auto"
-              className="w-full h-full object-contain rounded-lg"
-              style={{ maxHeight: '95vh' }}
-            >
-              Tarayıcınız video oynatmayı desteklemiyor.
-            </video>
+            {videoUrl && videoUrl.trim() !== '' ? (
+              <video
+                ref={modalVideoRef}
+                key={videoUrl} // videoUrl değiştiğinde video elementini yeniden oluştur
+                src={videoUrl}
+                controls
+                autoPlay
+                playsInline
+                preload="auto"
+                className="w-full h-full object-contain rounded-lg"
+                style={{ maxHeight: '95vh' }}
+                onLoadedMetadata={() => {
+                  console.log('Modal video metadata yüklendi')
+                }}
+                onCanPlayThrough={() => {
+                  console.log('Modal video tam yüklendi ve oynatılabilir')
+                }}
+              >
+                Tarayıcınız video oynatmayı desteklemiyor.
+              </video>
+            ) : (
+              <div className="flex items-center justify-center w-full h-full text-white">
+                <p className="text-lg">Video bulunamadı</p>
+              </div>
+            )}
           </div>
         </div>
       )}
