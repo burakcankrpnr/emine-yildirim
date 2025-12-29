@@ -1,13 +1,21 @@
 import { v2 as cloudinary } from 'cloudinary'
 
-// Cloudinary yapılandırması
+// Cloudinary yapılandırması - lazy loading ile
+let isConfigured = false
+
 function configureCloudinary() {
+  // Eğer zaten yapılandırılmışsa tekrar yapma
+  if (isConfigured) {
+    return
+  }
+
   // Önce CLOUDINARY_URL'yi kontrol et
   if (process.env.CLOUDINARY_URL) {
     // CLOUDINARY_URL varsa SDK otomatik olarak kullanır, ama yine de config yapalım
     cloudinary.config({
       secure: true,
     })
+    isConfigured = true
     return
   }
 
@@ -33,22 +41,17 @@ function configureCloudinary() {
     api_secret: apiSecret,
     secure: true,
   })
+  
+  isConfigured = true
 }
-
-// Config'i hemen yap
-configureCloudinary()
 
 export async function uploadToCloudinary(
   file: Buffer,
   folder: string = 'emine-yildirim',
   resourceType: 'image' | 'video' | 'raw' = 'image'
 ): Promise<{ url: string; publicId: string }> {
-  // Config kontrolü - eğer config yapılmamışsa tekrar dene
-  const currentConfig = cloudinary.config()
-  if (!currentConfig.api_key && !process.env.CLOUDINARY_URL) {
-    console.warn('Cloudinary config eksik, yeniden yapılandırılıyor...')
-    configureCloudinary()
-  }
+  // Config'i lazy loading ile yap - sadece kullanıldığında
+  configureCloudinary()
 
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
@@ -88,6 +91,9 @@ export async function deleteFromCloudinary(
   publicId: string,
   resourceType: 'image' | 'video' | 'raw' = 'image'
 ): Promise<void> {
+  // Config'i lazy loading ile yap - sadece kullanıldığında
+  configureCloudinary()
+  
   try {
     await cloudinary.uploader.destroy(publicId, {
       resource_type: resourceType,
