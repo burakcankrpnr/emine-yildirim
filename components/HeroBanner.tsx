@@ -2,7 +2,8 @@
 
 import Image from 'next/image'
 import { FaWhatsapp, FaPhone } from 'react-icons/fa'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useMemo } from 'react'
+import { getOptimizedVideoSources } from '@/lib/cloudinary'
 
 interface HeroBannerProps {
   videoUrl?: string
@@ -26,6 +27,11 @@ export default function HeroBanner({
   button2Link = '/hakkimda',
 }: HeroBannerProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
+
+  // Cloudinary video URL'lerini optimize et
+  const videoSources = useMemo(() => {
+    return getOptimizedVideoSources(videoUrl)
+  }, [videoUrl])
 
   // Video otomatik oynatma için
   useEffect(() => {
@@ -56,7 +62,7 @@ export default function HeroBanner({
         video.removeEventListener('loadeddata', playVideo)
       }
     }
-  }, [])
+  }, [videoUrl]) // videoUrl değiştiğinde yeniden çalışsın
 
   // Metni karakterlerine ayırıp animasyonlu render eden fonksiyon
   const renderAnimatedText = (text: string, baseDelay: number = 0, delayPerChar: number = 30) => {
@@ -90,18 +96,26 @@ export default function HeroBanner({
           <video
             ref={videoRef}
             className="w-full h-full object-cover"
-            src={videoUrl}
             autoPlay
             muted
             loop
             playsInline
             preload="auto"
             disablePictureInPicture
-            // Responsive video attributes
             style={{
               objectPosition: 'center center',
             }}
-          />
+          >
+            {videoSources.map((source, index) => (
+              <source
+                key={index}
+                src={source.src}
+                type={source.type}
+                media={source.media}
+              />
+            ))}
+            Tarayıcınız video oynatmayı desteklemiyor.
+          </video>
           <div className="absolute inset-0 bg-black/20 md:bg-black/10" />
         </div>
 
