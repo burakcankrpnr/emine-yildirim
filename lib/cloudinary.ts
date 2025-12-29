@@ -84,9 +84,14 @@ export async function uploadToCloudinary(
   })
 }
 
-export async function deleteFromCloudinary(publicId: string): Promise<void> {
+export async function deleteFromCloudinary(
+  publicId: string,
+  resourceType: 'image' | 'video' | 'raw' = 'image'
+): Promise<void> {
   try {
-    await cloudinary.uploader.destroy(publicId)
+    await cloudinary.uploader.destroy(publicId, {
+      resource_type: resourceType,
+    })
   } catch (error) {
     console.error('Cloudinary silme hatası:', error)
     throw error

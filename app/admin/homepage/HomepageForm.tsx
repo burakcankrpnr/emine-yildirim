@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { FaSave } from 'react-icons/fa'
+import { FaSave, FaTrash } from 'react-icons/fa'
 
 interface HomepageFormProps {
   initialHeroSettings?: {
@@ -42,6 +42,7 @@ export default function HomepageForm({
   const [isSaving, setIsSaving] = useState(false)
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null)
   const [uploadingVideo, setUploadingVideo] = useState<string | null>(null)
+  const [deletingVideo, setDeletingVideo] = useState<string | null>(null)
 
   // Hero Banner Ayarları
   const [heroSettings, setHeroSettings] = useState({
@@ -129,6 +130,82 @@ export default function HomepageForm({
       showToast('Yükleme sırasında bir hata oluştu', 'error')
     } finally {
       setUploadingVideo(null)
+    }
+  }
+
+  const handleVideoDelete = async (videoType: 'hero' | 'support' | 'counseling' | 'poster') => {
+    if (!confirm(`${videoType === 'poster' ? 'Poster' : 'Video'} silmek istediğinize emin misiniz?`)) {
+      return
+    }
+
+    setDeletingVideo(videoType)
+    try {
+      let url = ''
+      if (videoType === 'hero') {
+        url = heroSettings.videoUrl
+      } else if (videoType === 'support') {
+        url = videoSettings.supportSectionVideoUrl
+      } else if (videoType === 'counseling') {
+        url = videoSettings.counselingVideoUrl
+      } else if (videoType === 'poster') {
+        url = videoSettings.counselingVideoPoster
+      }
+
+      if (!url) {
+        showToast('Silinecek dosya bulunamadı', 'error')
+        return
+      }
+
+      const resourceType = videoType === 'poster' ? 'image' : 'video'
+      const response = await fetch(
+        `/api/admin/homepage/delete-video?url=${encodeURIComponent(url)}&resourceType=${resourceType}`,
+        {
+          method: 'DELETE',
+        }
+      )
+
+      if (response.ok) {
+        const data = await response.json()
+        
+        // Eğer local dosya ise veya zaten silinmişse, sadece state'i temizle
+        if (data.skipped || !url.includes('cloudinary.com')) {
+          // State'i temizle
+          if (videoType === 'hero') {
+            setHeroSettings({ ...heroSettings, videoUrl: '/bannervideo.mp4' })
+            setVideoSettings({ ...videoSettings, heroVideoUrl: '/bannervideo.mp4' })
+          } else if (videoType === 'support') {
+            setVideoSettings({ ...videoSettings, supportSectionVideoUrl: '/deneme.mp4' })
+          } else if (videoType === 'counseling') {
+            setVideoSettings({ ...videoSettings, counselingVideoUrl: '/online-terapi-final.mp4' })
+          } else if (videoType === 'poster') {
+            setVideoSettings({ ...videoSettings, counselingVideoPoster: '/onlinedanismanlik.jpg' })
+          }
+          showToast(`${videoType === 'poster' ? 'Poster' : 'Video'} kaldırıldı`, 'success')
+        } else {
+          // Cloudinary'den başarıyla silindi
+          if (videoType === 'hero') {
+            setHeroSettings({ ...heroSettings, videoUrl: '/bannervideo.mp4' })
+            setVideoSettings({ ...videoSettings, heroVideoUrl: '/bannervideo.mp4' })
+          } else if (videoType === 'support') {
+            setVideoSettings({ ...videoSettings, supportSectionVideoUrl: '/deneme.mp4' })
+          } else if (videoType === 'counseling') {
+            setVideoSettings({ ...videoSettings, counselingVideoUrl: '/online-terapi-final.mp4' })
+          } else if (videoType === 'poster') {
+            setVideoSettings({ ...videoSettings, counselingVideoPoster: '/onlinedanismanlik.jpg' })
+          }
+          showToast(`${videoType === 'poster' ? 'Poster' : 'Video'} başarıyla silindi!`, 'success')
+        }
+      } else {
+        const errorData = await response.json().catch(() => ({ error: 'Bilinmeyen hata' }))
+        const errorMessage = errorData.error || errorData.message || 'Silme sırasında bir hata oluştu'
+        console.error('Silme hatası:', errorMessage, errorData)
+        showToast(errorMessage, 'error')
+      }
+    } catch (error) {
+      console.error('Silme hatası:', error)
+      showToast('Silme sırasında bir hata oluştu', 'error')
+    } finally {
+      setDeletingVideo(null)
     }
   }
 
@@ -325,7 +402,17 @@ export default function HomepageForm({
                 )}
                 {heroSettings.videoUrl && (
                   <div className="mt-3 p-3 bg-gray-50 rounded-lg">
-                    <p className="text-sm font-semibold text-gray-700 mb-2">Mevcut video:</p>
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-sm font-semibold text-gray-700">Mevcut video:</p>
+                      <button
+                        onClick={() => handleVideoDelete('hero')}
+                        disabled={deletingVideo === 'hero'}
+                        className="px-3 py-1.5 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600 transition flex items-center gap-2 disabled:opacity-50"
+                      >
+                        <FaTrash />
+                        {deletingVideo === 'hero' ? 'Siliniyor...' : 'Sil'}
+                      </button>
+                    </div>
                     <div className="w-full max-w-md">
                       <video
                         src={heroSettings.videoUrl}
@@ -482,7 +569,17 @@ export default function HomepageForm({
                 )}
                 {videoSettings.supportSectionVideoUrl && (
                   <div className="mt-3 p-3 bg-gray-50 rounded-lg">
-                    <p className="text-sm font-semibold text-gray-700 mb-2">Mevcut video:</p>
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-sm font-semibold text-gray-700">Mevcut video:</p>
+                      <button
+                        onClick={() => handleVideoDelete('support')}
+                        disabled={deletingVideo === 'support'}
+                        className="px-3 py-1.5 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600 transition flex items-center gap-2 disabled:opacity-50"
+                      >
+                        <FaTrash />
+                        {deletingVideo === 'support' ? 'Siliniyor...' : 'Sil'}
+                      </button>
+                    </div>
                     <div className="w-full max-w-md">
                       <video
                         src={videoSettings.supportSectionVideoUrl}
@@ -521,7 +618,17 @@ export default function HomepageForm({
                 )}
                 {videoSettings.counselingVideoUrl && (
                   <div className="mt-3 p-3 bg-gray-50 rounded-lg">
-                    <p className="text-sm font-semibold text-gray-700 mb-2">Mevcut video:</p>
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-sm font-semibold text-gray-700">Mevcut video:</p>
+                      <button
+                        onClick={() => handleVideoDelete('counseling')}
+                        disabled={deletingVideo === 'counseling'}
+                        className="px-3 py-1.5 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600 transition flex items-center gap-2 disabled:opacity-50"
+                      >
+                        <FaTrash />
+                        {deletingVideo === 'counseling' ? 'Siliniyor...' : 'Sil'}
+                      </button>
+                    </div>
                     <div className="w-full max-w-md">
                       <video
                         src={videoSettings.counselingVideoUrl}
@@ -561,7 +668,17 @@ export default function HomepageForm({
                 )}
                 {videoSettings.counselingVideoPoster && (
                   <div className="mt-3 p-3 bg-gray-50 rounded-lg">
-                    <p className="text-sm font-semibold text-gray-700 mb-2">Mevcut poster:</p>
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-sm font-semibold text-gray-700">Mevcut poster:</p>
+                      <button
+                        onClick={() => handleVideoDelete('poster')}
+                        disabled={deletingVideo === 'poster'}
+                        className="px-3 py-1.5 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600 transition flex items-center gap-2 disabled:opacity-50"
+                      >
+                        <FaTrash />
+                        {deletingVideo === 'poster' ? 'Siliniyor...' : 'Sil'}
+                      </button>
+                    </div>
                     <div className="w-full max-w-md">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
