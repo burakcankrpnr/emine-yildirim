@@ -3,7 +3,15 @@
 import Image from 'next/image'
 import { useState } from 'react'
 
-export default function CounselingServices() {
+interface CounselingServicesProps {
+  videoUrl?: string
+  videoPoster?: string
+}
+
+export default function CounselingServices({
+  videoUrl = '/online-terapi-final.mp4',
+  videoPoster = '/onlinedanismanlik.jpg',
+}: CounselingServicesProps) {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
   const services = [
     {
@@ -183,13 +191,13 @@ export default function CounselingServices() {
         onClick={() => setIsVideoModalOpen(false)}
       >
         <div
-          className="relative w-full h-full max-w-7xl max-h-[95vh] flex items-center justify-center"
+          className="relative w-full h-full max-w-7xl max-h-[95vh] sm:max-h-[90vh] md:max-h-[85vh] flex items-center justify-center"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Kapat Butonu */}
           <button
             onClick={() => setIsVideoModalOpen(false)}
-            className="absolute top-2 right-2 sm:top-4 sm:right-4 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-black bg-opacity-50 hover:bg-opacity-70 text-white rounded-full flex items-center justify-center transition-all duration-300"
+            className="absolute top-2 right-2 sm:top-4 sm:right-4 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-black bg-opacity-50 hover:bg-opacity-70 active:bg-opacity-80 text-white rounded-full flex items-center justify-center transition-all duration-300 touch-manipulation"
             aria-label="Kapat"
           >
             <svg 
@@ -203,14 +211,21 @@ export default function CounselingServices() {
           </button>
 
           {/* Video Container */}
-          <div className="relative w-full h-full flex items-center justify-center">
+          <div className="relative w-full h-full flex items-center justify-center px-2 sm:px-4 md:px-6">
             <video
-              src="/online-terapi-final.mp4"
-              poster="/onlinedanismanlik.jpg"
+              src={videoUrl}
+              poster={videoPoster}
               controls
               autoPlay
-              className="w-full h-full object-contain rounded-lg"
-              style={{ maxHeight: '95vh' }}
+              playsInline
+              className="w-full h-auto max-w-full max-h-[85vh] sm:max-h-[80vh] md:max-h-[75vh] object-contain rounded-lg shadow-2xl"
+              // Mobil optimizasyonları
+              preload="metadata"
+              // Responsive video attributes
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+              }}
             >
               Tarayıcınız video oynatmayı desteklemiyor.
             </video>

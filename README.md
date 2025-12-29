@@ -12,6 +12,7 @@ Profesyonel psikolog web sitesi - Next.js, Tailwind CSS ve Prisma ile geliştiri
 - 🔐 Admin paneli
 - 🖱️ Özel imleç efekti
 - 📲 WhatsApp butonu
+- ☁️ Cloudinary ile görsel yönetimi
 
 ## Kurulum
 
@@ -32,6 +33,13 @@ SMTP_PASS="your-app-password"
 SMTP_FROM="your-email@gmail.com"
 SMTP_TO="emine@gmail.com"
 NEXT_PUBLIC_WHATSAPP_NUMBER="905326499146"
+
+# Cloudinary Ayarları
+CLOUDINARY_CLOUD_NAME="dyn0dtehh"
+CLOUDINARY_API_KEY="232257585894853"
+CLOUDINARY_API_SECRET="1FeVxm3zJs9tR6YQpHZ6twHPFh8"
+# Alternatif olarak CLOUDINARY_URL kullanabilirsiniz:
+# CLOUDINARY_URL="cloudinary://232257585894853:1FeVxm3zJs9tR6YQpHZ6twHPFh8@dyn0dtehh"
 ```
 
 3. Veritabanını oluşturun:
@@ -69,4 +77,5 @@ npm run dev
 - Prisma
 - SQLite (geliştirme)
 - Nodemailer (SMTP)
+- Cloudinary (Görsel yönetimi)
 

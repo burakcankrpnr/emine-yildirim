@@ -1,4 +1,12 @@
-export default function Quote() {
+interface QuoteProps {
+  quote?: string
+  author?: string
+}
+
+export default function Quote({
+  quote = 'Kişinin yaşamını değiştiren en büyük güç, geçmişi değil; geleceğe dair kurduğu anlamlı bir amaçtır.',
+  author = 'Alfred Adler',
+}: QuoteProps) {
   return (
     <section className="py-12 md:py-16 lg:py-20 bg-gradient-to-r from-[#764e45] to-[#5a3a33] text-white">
       <div className="container mx-auto px-4">
@@ -13,9 +21,9 @@ export default function Quote() {
             </svg>
           </div>
           <blockquote className="text-xl md:text-2xl lg:text-3xl font-light italic leading-relaxed mb-6 md:mb-8 px-2 md:px-0">
-            &ldquo;Kişinin yaşamını değiştiren en büyük güç, geçmişi değil; geleceğe dair kurduğu anlamlı bir amaçtır.&rdquo;
+            &ldquo;{quote}&rdquo;
           </blockquote>
-          <p className="text-base md:text-lg font-semibold">~Alfred Adler</p>
+          <p className="text-base md:text-lg font-semibold">~{author}</p>
         </div>
       </div>
     </section>

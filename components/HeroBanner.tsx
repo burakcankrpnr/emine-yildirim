@@ -4,7 +4,27 @@ import Image from 'next/image'
 import { FaWhatsapp, FaPhone } from 'react-icons/fa'
 import { useEffect, useRef } from 'react'
 
-export default function HeroBanner() {
+interface HeroBannerProps {
+  videoUrl?: string
+  subHeading?: string
+  mainHeading?: string
+  description?: string
+  button1Text?: string
+  button1Link?: string
+  button2Text?: string
+  button2Link?: string
+}
+
+export default function HeroBanner({
+  videoUrl = '/bannervideo.mp4',
+  subHeading = 'DEĞİŞİM, BİR ADIMLA BAŞLAR;',
+  mainHeading = 'Birlikte güçlü adımlar atalım',
+  description = 'Bazen küçük bir adım, büyük bir değişimin başlangıcıdır. Yolculuğunda güçlenmene ve netleşmene destek olmaya hazırım.',
+  button1Text = 'Online Danışmanlıklar',
+  button1Link = '/danismanliklar/online-danismanlik',
+  button2Text = 'Hakkımda',
+  button2Link = '/hakkimda',
+}: HeroBannerProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
 
   // Video otomatik oynatma için
@@ -64,21 +84,25 @@ export default function HeroBanner() {
 
   return (
     <>
-      <section className="relative h-screen min-h-[600px] overflow-hidden">
+      <section className="relative h-screen min-h-[500px] sm:min-h-[600px] md:min-h-[700px] overflow-hidden">
         {/* Arka plan video */}
         <div className="absolute inset-0 z-0">
           <video
             ref={videoRef}
             className="w-full h-full object-cover"
-            src="/bannervideo.mp4"
+            src={videoUrl}
             autoPlay
             muted
             loop
             playsInline
             preload="auto"
             disablePictureInPicture
+            // Responsive video attributes
+            style={{
+              objectPosition: 'center center',
+            }}
           />
-          <div className="absolute inset-0 bg-black/20" />
+          <div className="absolute inset-0 bg-black/20 md:bg-black/10" />
         </div>
 
         {/* İçerik */}
@@ -89,32 +113,32 @@ export default function HeroBanner() {
               <div className="text-left space-y-6">
                 {/* Küçük başlık */}
                 <p className="sub-heading single text-sm md:text-base text-white font-bold tracking-wide">
-                  {renderAnimatedText('DEĞİŞİM, BİR ADIMLA BAŞLAR;', 0, 30)}
+                  {renderAnimatedText(subHeading, 0, 30)}
                 </p>
 
                 {/* Ana başlık */}
                 <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-serif text-white leading-tight">
-                  {renderAnimatedText('Birlikte güçlü adımlar atalım', 300, 40)}
+                  {renderAnimatedText(mainHeading, 300, 40)}
                 </h1>
 
                 {/* Paragraf */}
                 <p className="text-base md:text-lg text-white/90 leading-relaxed max-w-xl">
-                  {renderAnimatedText('Bazen küçük bir adım, büyük bir değişimin başlangıcıdır. Yolculuğunda güçlenmene ve netleşmene destek olmaya hazırım.', 800, 15)}
+                  {renderAnimatedText(description, 800, 15)}
                 </p>
 
                 {/* Butonlar */}
                 <div className="flex flex-wrap gap-3 md:gap-4 pt-4 animate-fade-in-up animation-delay-600">
                   <a
-                    href="/danismanliklar/online-danismanlik"
+                    href={button1Link}
                     className="px-6 py-3 md:px-8 md:py-4 bg-[#764e45] text-white rounded-lg hover:bg-[#5a3a33] transition-colors font-semibold text-sm md:text-base lg:text-lg shadow-lg"
                   >
-                    Online Danışmanlıklar
+                    {button1Text}
                   </a>
                   <a
-                    href="hakkimda"
+                    href={button2Link}
                     className="px-6 py-3 md:px-8 md:py-4 bg-white text-[#764e45] rounded-lg hover:bg-gray-100 transition-colors font-semibold text-sm md:text-base lg:text-lg shadow-lg"
                   >
-                    Hakkımda
+                    {button2Text}
                   </a>
                 </div>
 

@@ -9,6 +9,7 @@ import Testimonials from '@/components/Testimonials'
 import ContactForm from '@/components/ContactForm'
 import CounselingServices from '@/components/CounselingServices'
 import InstagramReelsServer from '@/components/InstagramReelsServer'
+import { getHomepageSettings } from '@/lib/homepage'
 import { Metadata } from 'next'
 
 // Sayfanın her istekte güncel veriyi çekmesi için dinamik render
@@ -28,16 +29,33 @@ export const metadata: Metadata = {
   },
 }
 
-export default function Home() {
+export default async function Home() {
+  const settings = await getHomepageSettings()
+
   return (
     <div>
-      <HeroBanner />
+      <HeroBanner
+        videoUrl={settings.heroVideoUrl || undefined}
+        subHeading={settings.heroSubHeading || undefined}
+        mainHeading={settings.heroMainHeading || undefined}
+        description={settings.heroDescription || undefined}
+        button1Text={settings.heroButton1Text || undefined}
+        button1Link={settings.heroButton1Link || undefined}
+        button2Text={settings.heroButton2Text || undefined}
+        button2Link={settings.heroButton2Link || undefined}
+      />
       <AboutProfile />
-      <CounselingServices />
-      <SupportSection />
+      <CounselingServices
+        videoUrl={settings.counselingVideoUrl || undefined}
+        videoPoster={settings.counselingVideoPoster || undefined}
+      />
+      <SupportSection videoUrl={settings.supportSectionVideoUrl || undefined} />
       <BlogSection />
       <InstagramReelsServer />
-      <Quote />
+      <Quote
+        quote={settings.quoteText || undefined}
+        author={settings.quoteAuthor || undefined}
+      />
       <Testimonials />
       <ContactForm />
     </div>

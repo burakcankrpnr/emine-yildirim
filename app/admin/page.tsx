@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
-import { FaBlog, FaEnvelope, FaInstagram, FaStar } from 'react-icons/fa'
+import { FaBlog, FaEnvelope, FaInstagram, FaStar, FaHome } from 'react-icons/fa'
 
 async function checkAuth() {
   const cookieStore = await cookies()
@@ -23,6 +23,18 @@ export default async function AdminDashboard() {
           Admin Paneli
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          <Link
+            href="/admin/homepage"
+            className="bg-white p-4 md:p-6 rounded-lg shadow-md hover:shadow-xl transition"
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <FaHome className="text-2xl md:text-3xl text-primary" />
+              <h2 className="text-xl md:text-2xl font-semibold text-primary-dark">
+                Anasayfa İşlemleri
+              </h2>
+            </div>
+            <p className="text-sm md:text-base text-gray-600">Anasayfa içeriklerini yönetin</p>
+          </Link>
           <Link
             href="/admin/blog"
             className="bg-white p-4 md:p-6 rounded-lg shadow-md hover:shadow-xl transition"

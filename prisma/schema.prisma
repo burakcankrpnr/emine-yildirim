@@ -100,3 +100,31 @@ model Testimonial {
   updatedAt DateTime @updatedAt
 }
 
+model HomepageSettings {
+  id                    String   @id @default(cuid())
+  // Hero Banner
+  heroSubHeading        String?
+  heroMainHeading       String?
+  heroDescription       String?
+  heroButton1Text       String?
+  heroButton1Link       String?
+  heroButton2Text       String?
+  heroButton2Link       String?
+  heroVideoUrl          String?
+  // Alt Kutu
+  leftBoxTitle          String?
+  leftBoxDescription    String?
+  leftBoxExpertiseTitle String?
+  rightBoxTitle         String?
+  rightBoxDescription   String?
+  // Quote
+  quoteText             String?
+  quoteAuthor           String?
+  // Videolar
+  supportSectionVideoUrl String?
+  counselingVideoUrl     String?
+  counselingVideoPoster  String?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+

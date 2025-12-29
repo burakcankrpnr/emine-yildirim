@@ -3,7 +3,11 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import Image from 'next/image'
 
-export default function SupportSection() {
+interface SupportSectionProps {
+  videoUrl?: string
+}
+
+export default function SupportSection({ videoUrl = '/deneme.mp4' }: SupportSectionProps) {
   const [isVisible, setIsVisible] = useState(false)
   const [ailePercent, setAilePercent] = useState(0)
   const [evlilikPercent, setEvlilikPercent] = useState(0)
@@ -245,11 +249,11 @@ export default function SupportSection() {
           </div>
 
           {/* Sağ Taraf - Video Fragman */}
-          <div className="relative w-full min-h-[500px] sm:min-h-[600px] bg-black cursor-pointer group overflow-hidden" onClick={openVideoModal}>
+          <div className="relative w-full min-h-[400px] sm:min-h-[500px] md:min-h-[600px] lg:min-h-[700px] bg-black cursor-pointer group overflow-hidden" onClick={openVideoModal}>
             {/* Arka Plan Video - Fragman gibi otomatik oynatılıyor */}
             <video
               ref={videoRef}
-              src="/deneme.mp4"
+              src={videoUrl}
               autoPlay
               muted
               loop
@@ -257,6 +261,10 @@ export default function SupportSection() {
               preload="auto"
               disablePictureInPicture
               className="absolute inset-0 w-full h-full object-cover"
+              // Responsive video attributes
+              style={{
+                objectPosition: 'center center',
+              }}
             />
             {/* Overlay ve Oynat Butonu */}
             <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20 group-hover:bg-opacity-30 transition-all duration-300">
