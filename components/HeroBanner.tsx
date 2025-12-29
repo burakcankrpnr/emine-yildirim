@@ -28,10 +28,14 @@ export default function HeroBanner({
 }: HeroBannerProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
 
-  // Cloudinary video URL'lerini optimize et
+  // Cloudinary video URL'lerini optimize et - sadece Cloudinary URL'leri için
+  const isCloudinaryUrl = videoUrl?.includes('cloudinary.com') || false
   const videoSources = useMemo(() => {
-    return getOptimizedVideoSources(videoUrl)
-  }, [videoUrl])
+    if (isCloudinaryUrl) {
+      return getOptimizedVideoSources(videoUrl)
+    }
+    return []
+  }, [videoUrl, isCloudinaryUrl])
 
   // Video otomatik oynatma için - mobil optimizasyonlu
   useEffect(() => {
@@ -146,6 +150,7 @@ export default function HeroBanner({
             key={videoUrl} // videoUrl değiştiğinde video elementini yeniden oluştur
             ref={videoRef}
             className="w-full h-full object-cover"
+            src={!isCloudinaryUrl ? videoUrl : undefined} // Local dosyalar için direkt src
             autoPlay
             muted
             loop
@@ -156,7 +161,7 @@ export default function HeroBanner({
               objectPosition: 'center center',
             }}
           >
-            {videoSources.length > 0 ? (
+            {isCloudinaryUrl && videoSources.length > 0 && (
               videoSources.map((source, index) => (
                 <source
                   key={index}
@@ -165,8 +170,6 @@ export default function HeroBanner({
                   media={source.media}
                 />
               ))
-            ) : (
-              <source src={videoUrl} type="video/mp4" />
             )}
             Tarayıcınız video oynatmayı desteklemiyor.
           </video>
