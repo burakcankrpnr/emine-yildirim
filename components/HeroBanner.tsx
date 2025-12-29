@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { FaWhatsapp, FaPhone } from 'react-icons/fa'
 import { useEffect, useRef, useMemo } from 'react'
-import { getOptimizedVideoSources } from '@/lib/cloudinary'
+import { getOptimizedVideoSources } from '@/lib/video-utils'
 
 interface HeroBannerProps {
   videoUrl?: string
