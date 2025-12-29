@@ -5,25 +5,25 @@ import { FaSave, FaTrash } from 'react-icons/fa'
 
 interface HomepageFormProps {
   initialHeroSettings?: {
-    subHeading: string
-    mainHeading: string
-    description: string
-    button1Text: string
-    button1Link: string
-    button2Text: string
-    button2Link: string
+    subHeading?: string
+    mainHeading?: string
+    description?: string
+    button1Text?: string
+    button1Link?: string
+    button2Text?: string
+    button2Link?: string
     videoUrl?: string
   }
   initialBoxSettings?: {
-    leftBoxTitle: string
-    leftBoxDescription: string
-    leftBoxExpertiseTitle: string
-    rightBoxTitle: string
-    rightBoxDescription: string
+    leftBoxTitle?: string
+    leftBoxDescription?: string
+    leftBoxExpertiseTitle?: string
+    rightBoxTitle?: string
+    rightBoxDescription?: string
   }
   initialQuoteSettings?: {
-    quote: string
-    author: string
+    quote?: string
+    author?: string
   }
   initialVideoSettings?: {
     heroVideoUrl?: string
