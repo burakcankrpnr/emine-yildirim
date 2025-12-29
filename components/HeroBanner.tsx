@@ -33,36 +33,85 @@ export default function HeroBanner({
     return getOptimizedVideoSources(videoUrl)
   }, [videoUrl])
 
-  // Video otomatik oynatma için
+  // Video otomatik oynatma için - mobil optimizasyonlu
   useEffect(() => {
     const video = videoRef.current
-    if (video) {
-      // Mobil cihazlar için video oynatmayı zorla
-      video.muted = true
-      video.playsInline = true
-      
-      const playVideo = () => {
-        video.play().catch((error) => {
-          console.log('Video otomatik oynatma engellendi:', error)
-          // Kullanıcı etkileşimi sonrası tekrar dene
-          document.addEventListener('touchstart', () => {
-            video.play()
-          }, { once: true })
-        })
-      }
+    if (!video) return
 
-      // Video yüklendiğinde oynat
-      if (video.readyState >= 3) {
-        playVideo()
-      } else {
-        video.addEventListener('loadeddata', playVideo)
-      }
-
-      return () => {
-        video.removeEventListener('loadeddata', playVideo)
+    // Mobil cihazlar için video ayarları
+    video.muted = true
+    video.playsInline = true
+    video.setAttribute('playsinline', 'true')
+    video.setAttribute('webkit-playsinline', 'true')
+    video.setAttribute('x5-playsinline', 'true')
+    
+    const playVideo = async () => {
+      try {
+        // Video kaynağını yeniden yükle
+        if (video.readyState < 2) {
+          video.load()
+        }
+        
+        // Kısa bir gecikme sonrası oynatmayı dene
+        await new Promise(resolve => setTimeout(resolve, 100))
+        
+        const playPromise = video.play()
+        if (playPromise !== undefined) {
+          await playPromise
+        }
+      } catch (error) {
+        console.log('Video otomatik oynatma engellendi:', error)
+        
+        // Kullanıcı etkileşimi sonrası tekrar dene
+        const tryPlayOnInteraction = () => {
+          video.play().catch(() => {})
+          document.removeEventListener('touchstart', tryPlayOnInteraction)
+          document.removeEventListener('click', tryPlayOnInteraction)
+          document.removeEventListener('scroll', tryPlayOnInteraction)
+        }
+        
+        document.addEventListener('touchstart', tryPlayOnInteraction, { once: true })
+        document.addEventListener('click', tryPlayOnInteraction, { once: true })
+        document.addEventListener('scroll', tryPlayOnInteraction, { once: true })
       }
     }
-  }, [videoUrl]) // videoUrl değiştiğinde yeniden çalışsın
+
+    // Birden fazla event listener ekle - mobil için daha güvenilir
+    const events = ['loadeddata', 'canplay', 'canplaythrough', 'loadedmetadata']
+    const handlers: (() => void)[] = []
+
+    events.forEach(event => {
+      const handler = () => {
+        playVideo()
+      }
+      video.addEventListener(event, handler)
+      handlers.push(() => video.removeEventListener(event, handler))
+    })
+
+    // Eğer video zaten yüklenmişse hemen oynat
+    if (video.readyState >= 3) {
+      playVideo()
+    }
+
+    // Intersection Observer - video görünür olduğunda oynat
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            playVideo()
+          }
+        })
+      },
+      { threshold: 0.1 }
+    )
+
+    observer.observe(video)
+
+    return () => {
+      handlers.forEach(cleanup => cleanup())
+      observer.disconnect()
+    }
+  }, [videoUrl, videoSources]) // videoSources değiştiğinde de yeniden çalışsın
 
   // Metni karakterlerine ayırıp animasyonlu render eden fonksiyon
   const renderAnimatedText = (text: string, baseDelay: number = 0, delayPerChar: number = 30) => {
@@ -94,6 +143,7 @@ export default function HeroBanner({
         {/* Arka plan video */}
         <div className="absolute inset-0 z-0">
           <video
+            key={videoUrl} // videoUrl değiştiğinde video elementini yeniden oluştur
             ref={videoRef}
             className="w-full h-full object-cover"
             autoPlay
@@ -106,14 +156,18 @@ export default function HeroBanner({
               objectPosition: 'center center',
             }}
           >
-            {videoSources.map((source, index) => (
-              <source
-                key={index}
-                src={source.src}
-                type={source.type}
-                media={source.media}
-              />
-            ))}
+            {videoSources.length > 0 ? (
+              videoSources.map((source, index) => (
+                <source
+                  key={index}
+                  src={source.src}
+                  type={source.type}
+                  media={source.media}
+                />
+              ))
+            ) : (
+              <source src={videoUrl} type="video/mp4" />
+            )}
             Tarayıcınız video oynatmayı desteklemiyor.
           </video>
           <div className="absolute inset-0 bg-black/20 md:bg-black/10" />
