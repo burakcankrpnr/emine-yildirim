@@ -7,7 +7,7 @@ interface SupportSectionProps {
   videoUrl?: string
 }
 
-export default function SupportSection({ videoUrl = '/deneme.mp4' }: SupportSectionProps) {
+export default function SupportSection({ videoUrl }: SupportSectionProps) {
   const [isVisible, setIsVisible] = useState(false)
   const [ailePercent, setAilePercent] = useState(0)
   const [evlilikPercent, setEvlilikPercent] = useState(0)
@@ -251,21 +251,25 @@ export default function SupportSection({ videoUrl = '/deneme.mp4' }: SupportSect
           {/* Sağ Taraf - Video Fragman */}
           <div className="relative w-full min-h-[400px] sm:min-h-[500px] md:min-h-[600px] lg:min-h-[700px] bg-black cursor-pointer group overflow-hidden" onClick={openVideoModal}>
             {/* Arka Plan Video - Fragman gibi otomatik oynatılıyor */}
-            <video
-              ref={videoRef}
-              src={videoUrl}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-              disablePictureInPicture
-              className="absolute inset-0 w-full h-full object-cover"
-              // Responsive video attributes
-              style={{
-                objectPosition: 'center center',
-              }}
-            />
+            {videoUrl && videoUrl.trim() !== '' ? (
+              <video
+                ref={videoRef}
+                src={videoUrl}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="auto"
+                disablePictureInPicture
+                className="absolute inset-0 w-full h-full object-cover"
+                // Responsive video attributes
+                style={{
+                  objectPosition: 'center center',
+                }}
+              />
+            ) : (
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900" />
+            )}
             {/* Overlay ve Oynat Butonu */}
             <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20 group-hover:bg-opacity-30 transition-all duration-300">
               <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-[#a47355] flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-transform duration-300 border-2 border-white">

@@ -600,22 +600,30 @@ export default function HomepageForm({
                   onChange={(e) => {
                     const file = e.target.files?.[0]
                     if (file) handleVideoUpload(file, 'support')
+                    // Input'u temizle ki aynı dosya tekrar seçilebilsin
+                    e.target.value = ''
                   }}
                   disabled={uploadingVideo === 'support'}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-dark disabled:opacity-50"
                 />
-                <div className="bg-gray-50 p-3 rounded-lg text-xs text-gray-600 space-y-1">
-                  <p><strong>📦 Yükleme:</strong> Cloudinary - <code className="bg-gray-200 px-1 rounded">emine-yildirim/videos</code> klasörü</p>
+                <div className="bg-blue-50 border border-blue-200 p-3 rounded-lg text-xs text-gray-700 space-y-1">
+                  <p><strong>📦 Yükleme:</strong> Cloudinary - <code className="bg-blue-100 px-1 rounded">emine-yildirim/videos</code> klasörü</p>
                   <p><strong>📏 Maksimum boyut:</strong> 100MB</p>
                   <p><strong>🎬 Desteklenen formatlar:</strong> MP4, WebM, MOV, AVI</p>
+                  <p><strong>💡 Not:</strong> Video yüklendikten sonra &quot;Kaydet&quot; butonuna tıklamayı unutmayın!</p>
                 </div>
                 {uploadingVideo === 'support' && (
-                  <p className="text-sm text-blue-600 font-medium">⏳ Yükleniyor...</p>
+                  <div className="flex items-center gap-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                    <p className="text-sm text-blue-600 font-medium">⏳ Video Cloudinary&apos;ye yükleniyor...</p>
+                  </div>
                 )}
-                {videoSettings.supportSectionVideoUrl && (
-                  <div className="mt-3 p-3 bg-gray-50 rounded-lg">
+                {videoSettings.supportSectionVideoUrl ? (
+                  <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
                     <div className="flex items-center justify-between mb-2">
-                      <p className="text-sm font-semibold text-gray-700">Mevcut video:</p>
+                      <p className="text-sm font-semibold text-green-700 flex items-center gap-2">
+                        <span>✅</span> Video yüklendi
+                      </p>
                       <button
                         onClick={() => handleVideoDelete('support')}
                         disabled={deletingVideo === 'support'}
@@ -625,7 +633,7 @@ export default function HomepageForm({
                         {deletingVideo === 'support' ? 'Siliniyor...' : 'Sil'}
                       </button>
                     </div>
-                    <div className="w-full max-w-md">
+                    <div className="w-full max-w-md mb-2">
                       <video
                         src={videoSettings.supportSectionVideoUrl}
                         className="w-full h-auto max-h-40 rounded-lg border border-gray-300"
@@ -634,6 +642,15 @@ export default function HomepageForm({
                         preload="metadata"
                       />
                     </div>
+                    <p className="text-xs text-gray-600">
+                      <strong>URL:</strong> <code className="bg-gray-100 px-1 rounded break-all text-[10px]">{videoSettings.supportSectionVideoUrl}</code>
+                    </p>
+                  </div>
+                ) : (
+                  <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                    <p className="text-sm text-yellow-700">
+                      <strong>⚠️ Henüz video yüklenmedi.</strong> Support Section&apos;da default video gösterilecek. Video yüklemek için yukarıdaki dosya seçiciyi kullanın.
+                    </p>
                   </div>
                 )}
               </div>
@@ -649,22 +666,30 @@ export default function HomepageForm({
                   onChange={(e) => {
                     const file = e.target.files?.[0]
                     if (file) handleVideoUpload(file, 'counseling')
+                    // Input'u temizle ki aynı dosya tekrar seçilebilsin
+                    e.target.value = ''
                   }}
                   disabled={uploadingVideo === 'counseling'}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-dark disabled:opacity-50"
                 />
-                <div className="bg-gray-50 p-3 rounded-lg text-xs text-gray-600 space-y-1">
-                  <p><strong>📦 Yükleme:</strong> Cloudinary - <code className="bg-gray-200 px-1 rounded">emine-yildirim/videos</code> klasörü</p>
+                <div className="bg-blue-50 border border-blue-200 p-3 rounded-lg text-xs text-gray-700 space-y-1">
+                  <p><strong>📦 Yükleme:</strong> Cloudinary - <code className="bg-blue-100 px-1 rounded">emine-yildirim/videos</code> klasörü</p>
                   <p><strong>📏 Maksimum boyut:</strong> 100MB</p>
                   <p><strong>🎬 Desteklenen formatlar:</strong> MP4, WebM, MOV, AVI</p>
+                  <p><strong>💡 Not:</strong> Video yüklendikten sonra &quot;Kaydet&quot; butonuna tıklamayı unutmayın!</p>
                 </div>
                 {uploadingVideo === 'counseling' && (
-                  <p className="text-sm text-blue-600 font-medium">⏳ Yükleniyor...</p>
+                  <div className="flex items-center gap-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                    <p className="text-sm text-blue-600 font-medium">⏳ Video Cloudinary&apos;ye yükleniyor...</p>
+                  </div>
                 )}
-                {videoSettings.counselingVideoUrl && (
-                  <div className="mt-3 p-3 bg-gray-50 rounded-lg">
+                {videoSettings.counselingVideoUrl ? (
+                  <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
                     <div className="flex items-center justify-between mb-2">
-                      <p className="text-sm font-semibold text-gray-700">Mevcut video:</p>
+                      <p className="text-sm font-semibold text-green-700 flex items-center gap-2">
+                        <span>✅</span> Video yüklendi
+                      </p>
                       <button
                         onClick={() => handleVideoDelete('counseling')}
                         disabled={deletingVideo === 'counseling'}
@@ -674,7 +699,7 @@ export default function HomepageForm({
                         {deletingVideo === 'counseling' ? 'Siliniyor...' : 'Sil'}
                       </button>
                     </div>
-                    <div className="w-full max-w-md">
+                    <div className="w-full max-w-md mb-2">
                       <video
                         src={videoSettings.counselingVideoUrl}
                         className="w-full h-auto max-h-40 rounded-lg border border-gray-300"
@@ -683,6 +708,15 @@ export default function HomepageForm({
                         preload="metadata"
                       />
                     </div>
+                    <p className="text-xs text-gray-600">
+                      <strong>URL:</strong> <code className="bg-gray-100 px-1 rounded break-all text-[10px]">{videoSettings.counselingVideoUrl}</code>
+                    </p>
+                  </div>
+                ) : (
+                  <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                    <p className="text-sm text-yellow-700">
+                      <strong>⚠️ Henüz video yüklenmedi.</strong> Counseling Section&apos;da default video gösterilecek. Video yüklemek için yukarıdaki dosya seçiciyi kullanın.
+                    </p>
                   </div>
                 )}
               </div>
