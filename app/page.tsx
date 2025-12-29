@@ -31,6 +31,12 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   const settings = await getHomepageSettings()
+  
+  // Debug: Video URL'ini kontrol et
+  console.log('Homepage Settings:', {
+    heroVideoUrl: settings.heroVideoUrl,
+    hasVideoUrl: !!settings.heroVideoUrl,
+  })
 
   return (
     <div>

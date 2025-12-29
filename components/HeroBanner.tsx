@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { FaWhatsapp, FaPhone } from 'react-icons/fa'
-import { useEffect, useRef, useMemo } from 'react'
+import { useEffect, useRef, useMemo, useState } from 'react'
 import { getOptimizedVideoSources } from '@/lib/video-utils'
 
 interface HeroBannerProps {
@@ -17,7 +17,7 @@ interface HeroBannerProps {
 }
 
 export default function HeroBanner({
-  videoUrl = '/bannervideo.mp4',
+  videoUrl,
   subHeading = 'DEĞİŞİM, BİR ADIMLA BAŞLAR;',
   mainHeading = 'Birlikte güçlü adımlar atalım',
   description = 'Bazen küçük bir adım, büyük bir değişimin başlangıcıdır. Yolculuğunda güçlenmene ve netleşmene destek olmaya hazırım.',
@@ -27,73 +27,132 @@ export default function HeroBanner({
   button2Link = '/hakkimda',
 }: HeroBannerProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [videoError, setVideoError] = useState(false)
+  const [videoLoading, setVideoLoading] = useState(true)
 
   // Cloudinary video URL'lerini optimize et - sadece Cloudinary URL'leri için
   const isCloudinaryUrl = videoUrl?.includes('cloudinary.com') || false
   const videoSources = useMemo(() => {
+    if (!videoUrl) return []
     if (isCloudinaryUrl) {
       return getOptimizedVideoSources(videoUrl)
     }
-    return []
+    // Eğer Cloudinary değilse ama URL varsa, direkt kullan (fallback)
+    return [{ src: videoUrl, type: 'video/mp4' }]
   }, [videoUrl, isCloudinaryUrl])
+
+  // Debug için
+  useEffect(() => {
+    console.log('HeroBanner Props:', {
+      videoUrl,
+      hasVideoUrl: !!videoUrl,
+      videoUrlLength: videoUrl?.length,
+      isCloudinaryUrl,
+      videoSourcesCount: videoSources.length,
+      videoError,
+      videoLoading,
+    })
+    if (videoUrl) {
+      console.log('HeroBanner Video URL:', videoUrl)
+      console.log('Is Cloudinary:', isCloudinaryUrl)
+      console.log('Video Sources:', videoSources)
+    } else {
+      console.warn('HeroBanner: videoUrl yok!')
+    }
+  }, [videoUrl, isCloudinaryUrl, videoSources, videoError, videoLoading])
 
   // Video otomatik oynatma için - mobil optimizasyonlu
   useEffect(() => {
     const video = videoRef.current
-    if (!video) return
+    if (!video || !videoUrl) return
 
-    // Mobil cihazlar için video ayarları
+    // Mobil cihazlar için video ayarları - tüm platformlar için uyumlu
     video.muted = true
     video.playsInline = true
     video.setAttribute('playsinline', 'true')
     video.setAttribute('webkit-playsinline', 'true')
     video.setAttribute('x5-playsinline', 'true')
+    // iOS için özel ayarlar
+    video.setAttribute('webkit-playsinline', 'true')
+    // Android için özel ayarlar
+    video.setAttribute('x-webkit-airplay', 'allow')
+    
+    let isPlaying = false
+    let playAttempted = false
     
     const playVideo = async () => {
+      // Eğer zaten oynatılmaya çalışılıyorsa veya oynatılıyorsa, tekrar deneme
+      if (isPlaying || playAttempted) {
+        return
+      }
+      
       try {
-        // Video kaynağını yeniden yükle
-        if (video.readyState < 2) {
-          video.load()
+        playAttempted = true
+        
+        // Video zaten oynatılıyorsa, tekrar oynatma
+        if (!video.paused) {
+          isPlaying = true
+          playAttempted = false
+          return
         }
         
-        // Kısa bir gecikme sonrası oynatmayı dene
-        await new Promise(resolve => setTimeout(resolve, 100))
+        // Video hazır değilse bekle (load() çağırma - gereksiz yeniden yüklemeyi önle)
+        if (video.readyState < 2) {
+          await new Promise(resolve => setTimeout(resolve, 300))
+        }
         
         const playPromise = video.play()
         if (playPromise !== undefined) {
           await playPromise
+          isPlaying = true
+          playAttempted = false
         }
-      } catch (error) {
-        console.log('Video otomatik oynatma engellendi:', error)
-        
-        // Kullanıcı etkileşimi sonrası tekrar dene
-        const tryPlayOnInteraction = () => {
-          video.play().catch(() => {})
-          document.removeEventListener('touchstart', tryPlayOnInteraction)
-          document.removeEventListener('click', tryPlayOnInteraction)
-          document.removeEventListener('scroll', tryPlayOnInteraction)
+      } catch (error: any) {
+        // AbortError'ı görmezden gel (video yüklenirken normal)
+        if (error?.name !== 'AbortError') {
+          console.log('Video otomatik oynatma engellendi:', error)
         }
-        
-        document.addEventListener('touchstart', tryPlayOnInteraction, { once: true })
-        document.addEventListener('click', tryPlayOnInteraction, { once: true })
-        document.addEventListener('scroll', tryPlayOnInteraction, { once: true })
+        playAttempted = false
       }
     }
-
-    // Birden fazla event listener ekle - mobil için daha güvenilir
-    const events = ['loadeddata', 'canplay', 'canplaythrough', 'loadedmetadata']
-    const handlers: (() => void)[] = []
-
-    events.forEach(event => {
-      const handler = () => {
+    
+    // Video yükleme durumunu takip et - sadeleştirilmiş
+    const handleCanPlay = () => {
+      setVideoLoading(false)
+      if (!isPlaying && !playAttempted) {
         playVideo()
       }
-      video.addEventListener(event, handler)
-      handlers.push(() => video.removeEventListener(event, handler))
-    })
+    }
+    
+    const handleError = (e: Event) => {
+      console.error('Video yükleme hatası:', e)
+      setVideoError(true)
+      setVideoLoading(false)
+    }
+
+    const handleLoadedMetadata = () => {
+      setVideoLoading(false)
+    }
+    
+    const handlePlaying = () => {
+      isPlaying = true
+      playAttempted = false
+    }
+    
+    const handlePause = () => {
+      isPlaying = false
+    }
+
+    // Sadece gerekli event listener'ları ekle
+    video.addEventListener('canplay', handleCanPlay, { once: true })
+    video.addEventListener('loadedmetadata', handleLoadedMetadata)
+    video.addEventListener('error', handleError)
+    video.addEventListener('playing', handlePlaying)
+    video.addEventListener('pause', handlePause)
 
     // Eğer video zaten yüklenmişse hemen oynat
     if (video.readyState >= 3) {
+      setVideoLoading(false)
       playVideo()
     }
 
@@ -101,7 +160,7 @@ export default function HeroBanner({
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
+          if (entry.isIntersecting && !isPlaying && !playAttempted) {
             playVideo()
           }
         })
@@ -112,10 +171,29 @@ export default function HeroBanner({
     observer.observe(video)
 
     return () => {
-      handlers.forEach(cleanup => cleanup())
+      video.removeEventListener('canplay', handleCanPlay)
+      video.removeEventListener('loadedmetadata', handleLoadedMetadata)
+      video.removeEventListener('error', handleError)
+      video.removeEventListener('playing', handlePlaying)
+      video.removeEventListener('pause', handlePause)
       observer.disconnect()
+      isPlaying = false
+      playAttempted = false
     }
-  }, [videoUrl, videoSources]) // videoSources değiştiğinde de yeniden çalışsın
+  }, [videoUrl]) // Sadece videoUrl değiştiğinde çalışsın - videoSources'u kaldırdık
+
+  // Video URL değiştiğinde state'leri sıfırla
+  useEffect(() => {
+    setVideoError(false)
+    setVideoLoading(true)
+    
+    // Video yüklenmezse timeout ile loading state'ini kapat
+    const timeout = setTimeout(() => {
+      setVideoLoading(false)
+    }, 5000) // 5 saniye sonra loading'i kapat
+    
+    return () => clearTimeout(timeout)
+  }, [videoUrl])
 
   // Metni karakterlerine ayırıp animasyonlu render eden fonksiyon
   const renderAnimatedText = (text: string, baseDelay: number = 0, delayPerChar: number = 30) => {
@@ -143,38 +221,89 @@ export default function HeroBanner({
 
   return (
     <>
-      <section className="relative h-screen min-h-[500px] sm:min-h-[600px] md:min-h-[700px] overflow-hidden">
-        {/* Arka plan video */}
-        <div className="absolute inset-0 z-0">
-          <video
-            key={videoUrl} // videoUrl değiştiğinde video elementini yeniden oluştur
-            ref={videoRef}
-            className="w-full h-full object-cover"
-            src={!isCloudinaryUrl ? videoUrl : undefined} // Local dosyalar için direkt src
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            disablePictureInPicture
-            style={{
-              objectPosition: 'center center',
-            }}
-          >
-            {isCloudinaryUrl && videoSources.length > 0 && (
-              videoSources.map((source, index) => (
-                <source
-                  key={index}
-                  src={source.src}
-                  type={source.type}
-                  media={source.media}
-                />
-              ))
+      <section className="relative w-full h-screen min-h-[500px] sm:min-h-[600px] md:min-h-[700px] lg:min-h-[800px] overflow-hidden">
+        {/* Arka plan video - videoUrl varsa göster */}
+        {videoUrl && videoUrl.trim() !== '' && !videoError && (
+          <div className="absolute inset-0 z-0 w-full h-full overflow-hidden">
+            {/* Video yüklenirken loading overlay */}
+            {videoLoading && (
+              <div className="absolute inset-0 bg-gradient-to-br from-[#764e45] via-[#8b6b5f] to-[#5a3a33] flex items-center justify-center z-10">
+                <div className="animate-pulse text-white/50 text-sm">Video yükleniyor...</div>
+              </div>
             )}
-            Tarayıcınız video oynatmayı desteklemiyor.
-          </video>
-          <div className="absolute inset-0 bg-black/20 md:bg-black/10" />
-        </div>
+            <video
+              key={videoUrl} // videoUrl değiştiğinde video elementini yeniden oluştur
+              ref={videoRef}
+              className="absolute inset-0 w-full h-full object-cover"
+              // Cloudinary URL'leri için src attribute'u kullanma, sadece <source> tag'leri kullan
+              // Local dosyalar için direkt src kullan
+              {...(isCloudinaryUrl ? {} : { src: videoUrl })}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              disablePictureInPicture
+              webkit-playsinline="true"
+              x5-playsinline="true"
+              style={{
+                objectPosition: 'center center',
+                width: '100%',
+                height: '100%',
+                minWidth: '100%',
+                minHeight: '100%',
+                opacity: videoLoading ? 0.3 : 1,
+                transition: 'opacity 0.5s ease-in-out',
+              }}
+              onLoadedData={() => {
+                console.log('Video onLoadedData')
+                setVideoLoading(false)
+              }}
+              onCanPlay={() => {
+                console.log('Video onCanPlay')
+                setVideoLoading(false)
+              }}
+              onError={(e) => {
+                console.error('Video onError:', e)
+                setVideoError(true)
+                setVideoLoading(false)
+              }}
+            >
+              {/* Cloudinary URL'leri için responsive source'lar - mobil, tablet, desktop için optimize edilmiş */}
+              {isCloudinaryUrl && videoSources.length > 0 && (
+                videoSources.map((source, index) => (
+                  <source
+                    key={`source-${index}`}
+                    src={source.src}
+                    type={source.type}
+                    media={source.media}
+                  />
+                ))
+              )}
+              {/* Local dosyalar için fallback (eğer Cloudinary değilse) */}
+              {!isCloudinaryUrl && videoUrl && (
+                <source key="local-source" src={videoUrl} type="video/mp4" />
+              )}
+              Tarayıcınız video oynatmayı desteklemiyor.
+            </video>
+            <div className="absolute inset-0 bg-black/20 md:bg-black/10" />
+          </div>
+        )}
+        {/* Video hata durumunda veya video yoksa arka plan rengi */}
+        {(!videoUrl || videoUrl.trim() === '' || videoError) && (
+          <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#764e45] via-[#8b6b5f] to-[#5a3a33]">
+            {/* Development modunda video yoksa uyarı göster */}
+            {process.env.NODE_ENV === 'development' && !videoUrl && (
+              <div className="absolute top-4 left-4 bg-yellow-500 text-white px-4 py-2 rounded-lg text-sm z-20">
+                ⚠️ Video URL bulunamadı! Admin panelinden video yükleyin.
+              </div>
+            )}
+          </div>
+        )}
+        {/* Video yoksa arka plan rengi */}
+        {!videoUrl && (
+          <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#764e45] via-[#8b6b5f] to-[#5a3a33]" />
+        )}
 
         {/* İçerik */}
         <div className="relative z-10 h-full flex items-center">

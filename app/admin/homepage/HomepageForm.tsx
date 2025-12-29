@@ -53,15 +53,15 @@ export default function HomepageForm({
     button1Link: initialHeroSettings?.button1Link || '/danismanliklar/online-danismanlik',
     button2Text: initialHeroSettings?.button2Text || 'Hakkımda',
     button2Link: initialHeroSettings?.button2Link || '/hakkimda',
-    videoUrl: initialHeroSettings?.videoUrl || initialVideoSettings?.heroVideoUrl || '/bannervideo.mp4',
+    videoUrl: initialHeroSettings?.videoUrl || initialVideoSettings?.heroVideoUrl || undefined,
   })
 
   // Video Ayarları
   const [videoSettings, setVideoSettings] = useState({
-    heroVideoUrl: initialVideoSettings?.heroVideoUrl || '/bannervideo.mp4',
-    supportSectionVideoUrl: initialVideoSettings?.supportSectionVideoUrl || '/deneme.mp4',
-    counselingVideoUrl: initialVideoSettings?.counselingVideoUrl || '/online-terapi-final.mp4',
-    counselingVideoPoster: initialVideoSettings?.counselingVideoPoster || '/onlinedanismanlik.jpg',
+    heroVideoUrl: initialVideoSettings?.heroVideoUrl || undefined,
+    supportSectionVideoUrl: initialVideoSettings?.supportSectionVideoUrl || undefined,
+    counselingVideoUrl: initialVideoSettings?.counselingVideoUrl || undefined,
+    counselingVideoPoster: initialVideoSettings?.counselingVideoPoster || undefined,
   })
 
   // Alt Kutu Ayarları
@@ -118,7 +118,12 @@ export default function HomepageForm({
           setVideoSettings({ ...videoSettings, counselingVideoPoster: data.url })
         }
         
-        showToast(videoType === 'poster' ? 'Poster başarıyla yüklendi!' : 'Video başarıyla yüklendi!', 'success')
+        showToast(
+          videoType === 'poster' 
+            ? 'Poster başarıyla yüklendi! Lütfen "Kaydet" butonuna tıklayın.' 
+            : 'Video başarıyla Cloudinary\'ye yüklendi! Lütfen "Kaydet" butonuna tıklayın.', 
+          'success'
+        )
       } else {
         const errorData = await response.json().catch(() => ({ error: 'Bilinmeyen hata' }))
         const errorMessage = errorData.error || errorData.message || 'Yükleme sırasında bir hata oluştu'
@@ -140,7 +145,7 @@ export default function HomepageForm({
 
     setDeletingVideo(videoType)
     try {
-      let url = ''
+      let url: string | undefined = ''
       if (videoType === 'hero') {
         url = heroSettings.videoUrl
       } else if (videoType === 'support') {
@@ -165,35 +170,58 @@ export default function HomepageForm({
       )
 
       if (response.ok) {
-        const data = await response.json()
+        // State'i temizle - undefined yap (local dosya fallback yok)
+        if (videoType === 'hero') {
+          setHeroSettings({ ...heroSettings, videoUrl: undefined })
+          setVideoSettings({ ...videoSettings, heroVideoUrl: undefined })
+        } else if (videoType === 'support') {
+          setVideoSettings({ ...videoSettings, supportSectionVideoUrl: undefined })
+        } else if (videoType === 'counseling') {
+          setVideoSettings({ ...videoSettings, counselingVideoUrl: undefined })
+        } else if (videoType === 'poster') {
+          setVideoSettings({ ...videoSettings, counselingVideoPoster: undefined })
+        }
         
-        // Eğer local dosya ise veya zaten silinmişse, sadece state'i temizle
-        if (data.skipped || !url.includes('cloudinary.com')) {
-          // State'i temizle
-          if (videoType === 'hero') {
-            setHeroSettings({ ...heroSettings, videoUrl: '/bannervideo.mp4' })
-            setVideoSettings({ ...videoSettings, heroVideoUrl: '/bannervideo.mp4' })
-          } else if (videoType === 'support') {
-            setVideoSettings({ ...videoSettings, supportSectionVideoUrl: '/deneme.mp4' })
-          } else if (videoType === 'counseling') {
-            setVideoSettings({ ...videoSettings, counselingVideoUrl: '/online-terapi-final.mp4' })
-          } else if (videoType === 'poster') {
-            setVideoSettings({ ...videoSettings, counselingVideoPoster: '/onlinedanismanlik.jpg' })
-          }
-          showToast(`${videoType === 'poster' ? 'Poster' : 'Video'} kaldırıldı`, 'success')
+        // Veritabanına kaydet - güncel state ile
+        const updatedHeroSettings = videoType === 'hero' 
+          ? { ...heroSettings, videoUrl: undefined }
+          : heroSettings
+        const updatedVideoSettings = 
+          videoType === 'hero' ? { ...videoSettings, heroVideoUrl: undefined }
+          : videoType === 'support' ? { ...videoSettings, supportSectionVideoUrl: undefined }
+          : videoType === 'counseling' ? { ...videoSettings, counselingVideoUrl: undefined }
+          : videoType === 'poster' ? { ...videoSettings, counselingVideoPoster: undefined }
+          : videoSettings
+        
+        const saveResponse = await fetch('/api/admin/homepage', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            heroSubHeading: updatedHeroSettings.subHeading,
+            heroMainHeading: updatedHeroSettings.mainHeading,
+            heroDescription: updatedHeroSettings.description,
+            heroButton1Text: updatedHeroSettings.button1Text,
+            heroButton1Link: updatedHeroSettings.button1Link,
+            heroButton2Text: updatedHeroSettings.button2Text,
+            heroButton2Link: updatedHeroSettings.button2Link,
+            heroVideoUrl: updatedHeroSettings.videoUrl,
+            leftBoxTitle: boxSettings.leftBoxTitle,
+            leftBoxDescription: boxSettings.leftBoxDescription,
+            leftBoxExpertiseTitle: boxSettings.leftBoxExpertiseTitle,
+            rightBoxTitle: boxSettings.rightBoxTitle,
+            rightBoxDescription: boxSettings.rightBoxDescription,
+            quoteText: quoteSettings.quote,
+            quoteAuthor: quoteSettings.author,
+            supportSectionVideoUrl: updatedVideoSettings.supportSectionVideoUrl,
+            counselingVideoUrl: updatedVideoSettings.counselingVideoUrl,
+            counselingVideoPoster: updatedVideoSettings.counselingVideoPoster,
+          }),
+        })
+        
+        if (saveResponse.ok) {
+          showToast(`${videoType === 'poster' ? 'Poster' : 'Video'} başarıyla silindi ve kaydedildi!`, 'success')
         } else {
-          // Cloudinary'den başarıyla silindi
-          if (videoType === 'hero') {
-            setHeroSettings({ ...heroSettings, videoUrl: '/bannervideo.mp4' })
-            setVideoSettings({ ...videoSettings, heroVideoUrl: '/bannervideo.mp4' })
-          } else if (videoType === 'support') {
-            setVideoSettings({ ...videoSettings, supportSectionVideoUrl: '/deneme.mp4' })
-          } else if (videoType === 'counseling') {
-            setVideoSettings({ ...videoSettings, counselingVideoUrl: '/online-terapi-final.mp4' })
-          } else if (videoType === 'poster') {
-            setVideoSettings({ ...videoSettings, counselingVideoPoster: '/onlinedanismanlik.jpg' })
-          }
-          showToast(`${videoType === 'poster' ? 'Poster' : 'Video'} başarıyla silindi!`, 'success')
+          showToast(`${videoType === 'poster' ? 'Poster' : 'Video'} silindi ama kaydetme hatası oluştu`, 'error')
         }
       } else {
         const errorData = await response.json().catch(() => ({ error: 'Bilinmeyen hata' }))
@@ -388,22 +416,30 @@ export default function HomepageForm({
                   onChange={(e) => {
                     const file = e.target.files?.[0]
                     if (file) handleVideoUpload(file, 'hero')
+                    // Input'u temizle ki aynı dosya tekrar seçilebilsin
+                    e.target.value = ''
                   }}
                   disabled={uploadingVideo === 'hero'}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-dark disabled:opacity-50"
                 />
-                <div className="bg-gray-50 p-3 rounded-lg text-xs text-gray-600 space-y-1">
-                  <p><strong>📦 Yükleme:</strong> Cloudinary - <code className="bg-gray-200 px-1 rounded">emine-yildirim/videos</code> klasörü</p>
+                <div className="bg-blue-50 border border-blue-200 p-3 rounded-lg text-xs text-gray-700 space-y-1">
+                  <p><strong>📦 Yükleme:</strong> Cloudinary - <code className="bg-blue-100 px-1 rounded">emine-yildirim/videos</code> klasörü</p>
                   <p><strong>📏 Maksimum boyut:</strong> 100MB</p>
                   <p><strong>🎬 Desteklenen formatlar:</strong> MP4, WebM, MOV, AVI</p>
+                  <p><strong>💡 Not:</strong> Video yüklendikten sonra &quot;Kaydet&quot; butonuna tıklamayı unutmayın!</p>
                 </div>
                 {uploadingVideo === 'hero' && (
-                  <p className="text-sm text-blue-600 font-medium">⏳ Yükleniyor...</p>
+                  <div className="flex items-center gap-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                    <p className="text-sm text-blue-600 font-medium">⏳ Video Cloudinary&apos;ye yükleniyor...</p>
+                  </div>
                 )}
-                {heroSettings.videoUrl && (
-                  <div className="mt-3 p-3 bg-gray-50 rounded-lg">
+                {heroSettings.videoUrl ? (
+                  <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
                     <div className="flex items-center justify-between mb-2">
-                      <p className="text-sm font-semibold text-gray-700">Mevcut video:</p>
+                      <p className="text-sm font-semibold text-green-700 flex items-center gap-2">
+                        <span>✅</span> Video yüklendi
+                      </p>
                       <button
                         onClick={() => handleVideoDelete('hero')}
                         disabled={deletingVideo === 'hero'}
@@ -413,7 +449,7 @@ export default function HomepageForm({
                         {deletingVideo === 'hero' ? 'Siliniyor...' : 'Sil'}
                       </button>
                     </div>
-                    <div className="w-full max-w-md">
+                    <div className="w-full max-w-md mb-2">
                       <video
                         src={heroSettings.videoUrl}
                         className="w-full h-auto max-h-40 rounded-lg border border-gray-300"
@@ -422,6 +458,15 @@ export default function HomepageForm({
                         preload="metadata"
                       />
                     </div>
+                    <p className="text-xs text-gray-600">
+                      <strong>URL:</strong> <code className="bg-gray-100 px-1 rounded break-all text-[10px]">{heroSettings.videoUrl}</code>
+                    </p>
+                  </div>
+                ) : (
+                  <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                    <p className="text-sm text-yellow-700">
+                      <strong>⚠️ Henüz video yüklenmedi.</strong> Hero Banner&apos;da video gösterilmeyecek. Video yüklemek için yukarıdaki dosya seçiciyi kullanın.
+                    </p>
                   </div>
                 )}
               </div>
