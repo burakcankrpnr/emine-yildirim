@@ -1,12 +1,12 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Ebeveyn Danışmanlığı - Psikolog Emine Yıldırım',
-  description: 'Ebeveyn danışmanlığı hizmetleri. Çocuk yetiştirme, disiplin ve ebeveyn-çocuk ilişkisi konularında profesyonel destek. Antalya ebeveyn koçluğu.',
-  keywords: ['ebeveyn danışmanlığı', 'ebeveyn koçluğu', 'çocuk yetiştirme', 'disiplin yöntemleri', 'ebeveynlik', 'antalya ebeveyn danışmanlığı'],
+  title: 'Ebeveyn Danışmanlığı | Antalya Psikolog | Psikolog Emine Yıldırım',
+  description: 'Antalya psikolog Emine Yıldırım ile ebeveyn danışmanlığı ve koçluk. Çocuk yetiştirme, disiplin yöntemleri, ebeveyn-çocuk ilişkisi için profesyonel psikolojik destek.',
+  keywords: ['ebeveyn danışmanlığı Antalya', 'ebeveyn koçluğu Antalya', 'çocuk yetiştirme Antalya', 'disiplin yöntemleri Antalya', 'ebeveynlik danışmanlığı Antalya', 'Antalya psikolog', 'anne baba danışmanlığı Antalya'],
   openGraph: {
-    title: 'Ebeveyn Danışmanlığı | Psikolog Emine Yıldırım',
-    description: 'Çocuk yetiştirme, disiplin ve ebeveyn-çocuk ilişkisi konularında profesyonel destek.',
+    title: 'Ebeveyn Danışmanlığı | Antalya Psikolog | Psikolog Emine Yıldırım',
+    description: 'Antalya psikolog Emine Yıldırım ile ebeveyn danışmanlığı. Çocuk yetiştirme, disiplin ve ebeveyn-çocuk ilişkisi için profesyonel destek.',
     type: 'website',
   },
   alternates: {

@@ -2,12 +2,12 @@ import ContactForm from '@/components/ContactForm'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'İletişim - Psikolog Emine Yıldırım',
-  description: 'Sorularınız, önerileriniz veya talepleriniz için bizimle iletişime geçin. Size yardımcı olmaktan mutluluk duyarız. Antalya psikolojik danışmanlık randevusu.',
-  keywords: ['iletişim', 'randevu', 'psikolog randevusu', 'antalya psikolog iletişim', 'online terapi randevusu'],
+  title: 'İletişim ve Randevu | Antalya Psikolog | Psikolog Emine Yıldırım',
+  description: 'Antalya psikolog Emine Yıldırım ile randevu alın. Online ve yüz yüze terapi randevusu. ☎ 0532 649 91 46. Antalya psikolojik danışmanlık merkezi iletişim bilgileri.',
+  keywords: ['psikolog randevusu Antalya', 'Antalya psikolog iletişim', 'online terapi randevusu', 'Antalya psikolog telefon', 'psikolog randevu alma', 'Antalya psikolojik danışman randevu', 'terapi randevusu'],
   openGraph: {
-    title: 'İletişim | Psikolog Emine Yıldırım',
-    description: 'Sorularınız için bizimle iletişime geçin.',
+    title: 'İletişim ve Randevu | Antalya Psikolog | Psikolog Emine Yıldırım',
+    description: 'Antalya psikolog Emine Yıldırım ile randevu alın. Online ve yüz yüze terapi. ☎ 0532 649 91 46',
     type: 'website',
   },
   alternates: {

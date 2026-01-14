@@ -21,11 +21,28 @@ const dancingScript = Dancing_Script({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://psikologemineyildirim.com.tr'),
   title: {
-    default: 'Antalya Psikolog - Psikolog Emine Yıldırım',
-    template: '%s | Psikolog Emine Yıldırım'
+    default: 'Antalya Psikolog | Psikolog Emine Yıldırım | Psikolojik Danışmanlık',
+    template: '%s | Psikolog Emine Yıldırım | Antalya'
   },
-  description: 'Antalya\'da profesyonel psikolojik destek hizmetleri. Psikolog Emine Yıldırım ile yetişkin, çocuk, ergen ve aile psikolojisi alanlarında uzman hizmet.',
-  keywords: ['Antalya psikolog', 'psikolog emine yıldırım', 'psikolog', 'psikolojik danışmanlık', 'aile terapisi', 'çocuk psikologu', 'online terapi'],
+  description: 'Antalya\'nın en iyi psikoloğu Emine Yıldırım. Yetişkin, çocuk, ergen psikolojisi, aile ve çift terapisi, online psikolojik danışmanlık. Antalya merkez ofis ve online randevu.',
+  keywords: [
+    'Antalya psikolog',
+    'psikolog Antalya',
+    'Antalya psikolojik danışman',
+    'psikolog emine yıldırım',
+    'Antalya en iyi psikolog',
+    'Antalya psikolog randevu',
+    'yetişkin psikolog Antalya',
+    'çocuk psikolog Antalya',
+    'ergen psikolog Antalya',
+    'aile terapisi Antalya',
+    'çift terapisi Antalya',
+    'online psikolog',
+    'online terapi',
+    'psikolojik danışmanlık Antalya',
+    'psikolog muayenehane Antalya',
+    'ebeveyn danışmanlığı Antalya',
+  ],
   authors: [{ name: 'Emine Yıldırım' }],
   creator: 'Emine Yıldırım',
   publisher: 'Emine Yıldırım',
@@ -49,22 +66,22 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'tr_TR',
     url: '/',
-    siteName: 'Psikolog Emine Yıldırım',
-    title: 'Antalya Psikolog - Psikolog Emine Yıldırım',
-    description: 'Antalya\'da profesyonel psikolojik destek hizmetleri. Psikolog Emine Yıldırım ile yetişkin, çocuk, ergen ve aile psikolojisi alanlarında uzman hizmet.',
+    siteName: 'Psikolog Emine Yıldırım | Antalya',
+    title: 'Antalya Psikolog | Psikolog Emine Yıldırım | En İyi Psikolojik Danışmanlık',
+    description: 'Antalya\'nın en iyi psikoloğu Emine Yıldırım. Yetişkin, çocuk, ergen psikolojisi, aile ve çift terapisi, online psikolojik danışmanlık. ☎ 0532 649 91 46',
     images: [
       {
         url: '/kapak.jpg',
         width: 1200,
         height: 630,
-        alt: 'Psikolog Emine Yıldırım',
+        alt: 'Psikolog Emine Yıldırım - Antalya Psikolog',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Antalya Psikolog - Psikolog Emine Yıldırım',
-    description: 'Antalya\'da profesyonel psikolojik destek hizmetleri.  Psikolog Emine Yıldırım ile yetişkin, çocuk, ergen ve aile psikolojisi alanlarında uzman hizmet.',
+    title: 'Antalya Psikolog | Psikolog Emine Yıldırım',
+    description: 'Antalya\'nın en iyi psikoloğu. Yetişkin, çocuk, ergen psikolojisi, aile ve çift terapisi, online danışmanlık. Randevu: 0532 649 91 46',
     images: ['/kapak.jpg'],
   },
   robots: {
@@ -94,17 +111,114 @@ export default function RootLayout({
 }) {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://psikologemineyildirim.com.tr'
 
+  // LocalBusiness Schema - Yerel SEO için kritik
+  const localBusinessSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    '@id': `${baseUrl}/#localbusiness`,
+    name: 'Psikolog Emine Yıldırım',
+    alternateName: 'Antalya Psikolog Emine Yıldırım',
+    url: baseUrl,
+    logo: `${baseUrl}/logo.png`,
+    image: `${baseUrl}/kapak.jpg`,
+    description: 'Antalya\'nın en iyi psikoloğu. Yetişkin, çocuk, ergen psikolojisi, aile ve çift terapisi, online psikolojik danışmanlık hizmetleri.',
+    priceRange: '$$',
+    telephone: '+905326499146',
+    email: 'emineyildirimpsikolog@gmail.com',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Antalya Merkez',
+      addressLocality: 'Antalya',
+      addressRegion: 'Antalya',
+      postalCode: '07000',
+      addressCountry: 'TR',
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: '36.8969',
+      longitude: '30.7133',
+    },
+    areaServed: [
+      {
+        '@type': 'City',
+        name: 'Antalya',
+      },
+      {
+        '@type': 'Country',
+        name: 'Türkiye',
+      }
+    ],
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        opens: '09:00',
+        closes: '18:00',
+      },
+    ],
+    sameAs: [
+      // Instagram, Facebook, LinkedIn gibi sosyal medya linkleri buraya eklenebilir
+    ],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Psikolojik Danışmanlık Hizmetleri',
+      itemListElement: [
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Yetişkin Psikolojisi',
+            description: 'Yetişkinler için profesyonel psikolojik destek ve terapi hizmeti',
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Çocuk ve Ergen Psikolojisi',
+            description: 'Çocuk ve ergenler için uzman psikolojik danışmanlık',
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Aile ve Çift Terapisi',
+            description: 'Aile ve çiftler için profesyonel terapi hizmeti',
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Online Psikolojik Danışmanlık',
+            description: 'Online video görüşme ile psikolojik destek',
+          },
+        },
+      ],
+    },
+  }
+
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    '@id': `${baseUrl}/#organization`,
     name: 'Psikolog Emine Yıldırım',
     url: baseUrl,
-    logo: `${baseUrl}/emine-yildirim.png`,
-    description: 'Antalya\'da profesyonel psikolojik destek hizmetleri.  Psikolog Emine Yıldırım ile yetişkin, çocuk, ergen ve aile psikolojisi alanlarında uzman hizmet.',
+    logo: `${baseUrl}/logo.png`,
+    description: 'Antalya\'nın en iyi psikolojik danışmanlık hizmeti. Profesyonel psikolog eşliğinde yetişkin, çocuk, ergen ve aile terapisi.',
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Antalya',
+      addressRegion: 'Antalya',
       addressCountry: 'TR',
+    },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: '+905326499146',
+      contactType: 'Customer Service',
+      areaServed: 'TR',
+      availableLanguage: ['Turkish'],
     },
     sameAs: [
       // Instagram, Facebook, LinkedIn gibi sosyal medya linkleri buraya eklenebilir
@@ -114,36 +228,69 @@ export default function RootLayout({
   const personSchema = {
     '@context': 'https://schema.org',
     '@type': 'Person',
+    '@id': `${baseUrl}/#person`,
     name: 'Emine Yıldırım',
-    jobTitle: ' Psikolog',
-    description: ' Psikolog Emine Yıldırım - Antalya\'da profesyonel psikolojik destek hizmetleri sunmaktadır.',
+    givenName: 'Emine',
+    familyName: 'Yıldırım',
+    jobTitle: 'Psikolog',
+    description: 'Psikolog Emine Yıldırım - Antalya\'da profesyonel psikolojik destek, terapi ve danışmanlık hizmetleri sunmaktadır.',
     url: baseUrl,
     image: `${baseUrl}/kapak.jpg`,
+    telephone: '+905326499146',
+    email: 'emineyildirimpsikolog@gmail.com',
+    worksFor: {
+      '@id': `${baseUrl}/#organization`,
+    },
     knowsAbout: [
       'Psikoloji',
-      'Psikoloji',
+      'Klinik Psikoloji',
       'Yetişkin Psikolojisi',
       'Çocuk Psikolojisi',
       'Ergen Psikolojisi',
       'Aile Terapisi',
       'Çift Terapisi',
+      'Evlilik Danışmanlığı',
+      'Ebeveyn Danışmanlığı',
       'Online Terapi',
+      'Psikolojik Danışmanlık',
     ],
-    areaServed: {
-      '@type': 'City',
-      name: 'Antalya',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Antalya',
+      addressRegion: 'Antalya',
+      addressCountry: 'TR',
     },
+    areaServed: [
+      {
+        '@type': 'City',
+        name: 'Antalya',
+      },
+      {
+        '@type': 'Country',
+        name: 'Türkiye',
+      }
+    ],
   }
 
   const websiteSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'Psikolog Emine Yıldırım',
+    '@id': `${baseUrl}/#website`,
+    name: 'Psikolog Emine Yıldırım | Antalya',
+    alternateName: 'Antalya Psikolog',
     url: baseUrl,
-    description: 'Antalya\'da profesyonel psikolojik destek hizmetleri.  Psikolog Emine Yıldırım ile yetişkin, çocuk, ergen ve aile psikolojisi alanlarında uzman hizmet.',
+    description: 'Antalya\'nın en iyi psikoloğu Emine Yıldırım. Yetişkin, çocuk, ergen psikolojisi, aile ve çift terapisi, online psikolojik danışmanlık hizmetleri.',
+    inLanguage: 'tr-TR',
     publisher: {
-      '@type': 'Organization',
-      name: 'Psikolog Emine Yıldırım',
+      '@id': `${baseUrl}/#organization`,
+    },
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${baseUrl}/blog?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
     },
   }
 
@@ -160,6 +307,10 @@ export default function RootLayout({
           integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
           crossOrigin="anonymous" 
           referrerPolicy="no-referrer" 
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
         />
         <script
           type="application/ld+json"

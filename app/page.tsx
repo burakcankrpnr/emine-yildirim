@@ -17,11 +17,12 @@ export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 export const metadata: Metadata = {
-  title: 'Antalya Psikolog - Psikolog Emine Yıldırım',
-  description: 'Antalya\'da profesyonel psikolojik destek hizmetleri.  Psikolog Emine Yıldırım ile yetişkin, çocuk, ergen ve aile psikolojisi alanlarında uzman hizmet.',
+  title: 'Antalya Psikolog | Psikolog Emine Yıldırım | En İyi Psikolojik Danışmanlık',
+  description: 'Antalya\'nın en iyi psikoloğu Emine Yıldırım. Yetişkin, çocuk, ergen psikolojisi, aile ve çift terapisi, online danışmanlık. Randevu: ☎ 0532 649 91 46. Profesyonel psikolojik destek.',
+  keywords: ['Antalya psikolog', 'psikolog Antalya', 'Antalya en iyi psikolog', 'psikolog emine yıldırım', 'Antalya psikolojik danışman', 'terapi Antalya', 'psikolojik destek Antalya'],
   openGraph: {
-    title: 'Antalya Psikolog - Psikolog Emine Yıldırım',
-    description: 'Antalya\'da profesyonel psikolojik destek hizmetleri.  Psikolog Emine Yıldırım ile yetişkin, çocuk, ergen ve aile psikolojisi alanlarında uzman hizmet.',
+    title: 'Antalya Psikolog | Psikolog Emine Yıldırım | En İyi Psikolojik Danışmanlık',
+    description: 'Antalya\'nın en iyi psikoloğu. Yetişkin, çocuk, ergen psikolojisi, aile ve çift terapisi, online danışmanlık. Randevu: ☎ 0532 649 91 46',
     url: '/',
   },
   alternates: {

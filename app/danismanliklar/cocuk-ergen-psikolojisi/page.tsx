@@ -1,12 +1,12 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Çocuk - Ergen Psikolojisi - Psikolog Emine Yıldırım',
-  description: 'Çocuk ve ergen psikolojisi hizmetleri. Çocuklarda ve ergenlerde görülen psikolojik sorunlar için uzman destek. Antalya çocuk psikologu.',
-  keywords: ['çocuk psikologu', 'ergen psikolojisi', 'çocuk terapisi', 'dehb', 'okul uyum sorunları', 'antalya çocuk psikologu'],
+  title: 'Çocuk ve Ergen Psikolojisi | Antalya Psikolog | Psikolog Emine Yıldırım',
+  description: 'Antalya psikolog Emine Yıldırım ile çocuk ve ergen psikolojisi. DEHB, okul uyum sorunları, davranış problemleri için uzman çocuk psikologu ve terapi hizmetleri.',
+  keywords: ['çocuk psikologu Antalya', 'ergen psikolojisi Antalya', 'çocuk terapisi Antalya', 'DEHB tedavisi Antalya', 'okul uyum sorunları Antalya', 'Antalya çocuk psikologu', 'davranış problemleri Antalya', 'ergen terapisi Antalya'],
   openGraph: {
-    title: 'Çocuk - Ergen Psikolojisi | Psikolog Emine Yıldırım',
-    description: 'Çocuklarda ve ergenlerde görülen psikolojik sorunlar için uzman destek.',
+    title: 'Çocuk ve Ergen Psikolojisi | Antalya Psikolog | Psikolog Emine Yıldırım',
+    description: 'Antalya psikolog Emine Yıldırım ile çocuk ve ergen psikolojisi. DEHB, okul uyum sorunları, davranış problemleri için uzman destek.',
     type: 'website',
   },
   alternates: {

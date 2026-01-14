@@ -1,12 +1,12 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Online Danışmanlık - Psikolog Emine Yıldırım',
-  description: 'Online danışmanlık hizmetleri. Evden konforunuzda, güvenli ve etkili psikolojik destek alın. Video konferans ile profesyonel psikolojik danışmanlık.',
-  keywords: ['online danışmanlık', 'online terapi', 'uzaktan terapi', 'video konferans terapi', 'evden psikolojik destek'],
+  title: 'Online Danışmanlık | Antalya Psikolog | Psikolog Emine Yıldırım',
+  description: 'Antalya psikolog Emine Yıldırım ile online psikolojik danışmanlık. Evden güvenli ve etkili terapi. Video konferans ile profesyonel online psikolojik destek hizmeti.',
+  keywords: ['online danışmanlık Antalya', 'online psikolog', 'online terapi', 'uzaktan psikolojik danışmanlık', 'video konferans terapi', 'evden psikolojik destek', 'online psikolog Antalya', 'Antalya online terapi'],
   openGraph: {
-    title: 'Online Danışmanlık | Psikolog Emine Yıldırım',
-    description: 'Evden konforunuzda, güvenli ve etkili psikolojik destek. Video konferans ile profesyonel online danışmanlık hizmeti.',
+    title: 'Online Danışmanlık | Antalya Psikolog | Psikolog Emine Yıldırım',
+    description: 'Antalya psikolog Emine Yıldırım ile online psikolojik danışmanlık. Evden güvenli ve etkili terapi. Video konferans ile profesyonel destek.',
     type: 'website',
   },
   alternates: {
