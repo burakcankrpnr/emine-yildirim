@@ -28,7 +28,6 @@ export default function HeroBanner({
 }: HeroBannerProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [videoError, setVideoError] = useState(false)
-  const [videoLoading, setVideoLoading] = useState(true)
 
   // Cloudinary video URL'lerini optimize et - sadece Cloudinary URL'leri için
   const isCloudinaryUrl = videoUrl?.includes('cloudinary.com') || false
@@ -50,7 +49,6 @@ export default function HeroBanner({
       isCloudinaryUrl,
       videoSourcesCount: videoSources.length,
       videoError,
-      videoLoading,
     })
     if (videoUrl) {
       console.log('HeroBanner Video URL:', videoUrl)
@@ -59,7 +57,7 @@ export default function HeroBanner({
     } else {
       console.warn('HeroBanner: videoUrl yok!')
     }
-  }, [videoUrl, isCloudinaryUrl, videoSources, videoError, videoLoading])
+  }, [videoUrl, isCloudinaryUrl, videoSources, videoError])
 
   // Video otomatik oynatma için - mobil optimizasyonlu
   useEffect(() => {
@@ -118,7 +116,6 @@ export default function HeroBanner({
     
     // Video yükleme durumunu takip et - sadeleştirilmiş
     const handleCanPlay = () => {
-      setVideoLoading(false)
       if (!isPlaying && !playAttempted) {
         playVideo()
       }
@@ -127,11 +124,10 @@ export default function HeroBanner({
     const handleError = (e: Event) => {
       console.error('Video yükleme hatası:', e)
       setVideoError(true)
-      setVideoLoading(false)
     }
 
     const handleLoadedMetadata = () => {
-      setVideoLoading(false)
+      // Video metadata yüklendi
     }
     
     const handlePlaying = () => {
@@ -152,7 +148,6 @@ export default function HeroBanner({
 
     // Eğer video zaten yüklenmişse hemen oynat
     if (video.readyState >= 3) {
-      setVideoLoading(false)
       playVideo()
     }
 
@@ -185,35 +180,36 @@ export default function HeroBanner({
   // Video URL değiştiğinde state'leri sıfırla
   useEffect(() => {
     setVideoError(false)
-    setVideoLoading(true)
-    
-    // Video yüklenmezse timeout ile loading state'ini kapat
-    const timeout = setTimeout(() => {
-      setVideoLoading(false)
-    }, 5000) // 5 saniye sonra loading'i kapat
-    
-    return () => clearTimeout(timeout)
   }, [videoUrl])
 
-  // Metni karakterlerine ayırıp animasyonlu render eden fonksiyon
+  // Metni kelimelerine ayırıp animasyonlu render eden fonksiyon - kelimeler bölünmez
   const renderAnimatedText = (text: string, baseDelay: number = 0, delayPerChar: number = 30) => {
-    let charIndex = 0
-    return text.split('').map((char, index) => {
-      // Boşluk karakterleri için özel işleme
-      if (char === ' ') {
-        return <span key={index} className="inline-block">&nbsp;</span>
-      }
-      const delay = baseDelay + charIndex * delayPerChar
-      charIndex++
+    let globalCharIndex = 0
+    const words = text.split(' ')
+    
+    return words.map((word, wordIndex) => {
+      const wordChars = word.split('').map((char, localCharIndex) => {
+        const delay = baseDelay + globalCharIndex * delayPerChar
+        globalCharIndex++
+        return (
+          <span
+            key={`${wordIndex}-${localCharIndex}`}
+            className="inline-block animate-char-fade-in"
+            style={{
+              animationDelay: `${delay}ms`,
+            }}
+          >
+            {char}
+          </span>
+        )
+      })
+      
+      globalCharIndex++ // Boşluk için
+      
       return (
-        <span
-          key={index}
-          className="inline-block animate-char-fade-in"
-          style={{
-            animationDelay: `${delay}ms`,
-          }}
-        >
-          {char}
+        <span key={wordIndex} className="inline-block whitespace-nowrap">
+          {wordChars}
+          {wordIndex < words.length - 1 && <span className="inline-block">&nbsp;</span>}
         </span>
       )
     })
@@ -225,12 +221,6 @@ export default function HeroBanner({
         {/* Arka plan video - videoUrl varsa göster */}
         {videoUrl && videoUrl.trim() !== '' && !videoError && (
           <div className="absolute inset-0 z-0 w-full h-full overflow-hidden">
-            {/* Video yüklenirken loading overlay */}
-            {videoLoading && (
-              <div className="absolute inset-0 bg-gradient-to-br from-[#764e45] via-[#8b6b5f] to-[#5a3a33] flex items-center justify-center z-10">
-                <div className="animate-pulse text-white/50 text-sm">Video yükleniyor...</div>
-              </div>
-            )}
             <video
               key={videoUrl} // videoUrl değiştiğinde video elementini yeniden oluştur
               ref={videoRef}
@@ -252,21 +242,16 @@ export default function HeroBanner({
                 height: '100%',
                 minWidth: '100%',
                 minHeight: '100%',
-                opacity: videoLoading ? 0.3 : 1,
-                transition: 'opacity 0.5s ease-in-out',
               }}
               onLoadedData={() => {
                 console.log('Video onLoadedData')
-                setVideoLoading(false)
               }}
               onCanPlay={() => {
                 console.log('Video onCanPlay')
-                setVideoLoading(false)
               }}
               onError={(e) => {
                 console.error('Video onError:', e)
                 setVideoError(true)
-                setVideoLoading(false)
               }}
             >
               {/* Cloudinary URL'leri için responsive source'lar - mobil, tablet, desktop için optimize edilmiş */}
@@ -310,33 +295,33 @@ export default function HeroBanner({
           <div className="container mx-auto px-4 w-full">
             <div className="max-w-4xl mx-auto">
               {/* Sol taraf - Metin ve Butonlar */}
-              <div className="text-left space-y-6">
+              <div className="text-left space-y-4 sm:space-y-5 md:space-y-6 lg:space-y-8">
                 {/* Küçük başlık */}
-                <p className="sub-heading single text-sm md:text-base text-white font-bold tracking-wide">
+                <p className="sub-heading single text-xs sm:text-sm md:text-base lg:text-lg text-white font-bold tracking-wide uppercase">
                   {renderAnimatedText(subHeading, 0, 30)}
                 </p>
 
                 {/* Ana başlık */}
-                <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-serif text-white leading-tight">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-serif text-white leading-tight sm:leading-tight md:leading-tight lg:leading-tight">
                   {renderAnimatedText(mainHeading, 300, 40)}
                 </h1>
 
                 {/* Paragraf */}
-                <p className="text-base md:text-lg text-white/90 leading-relaxed max-w-xl">
+                <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 leading-relaxed md:leading-relaxed lg:leading-loose max-w-full sm:max-w-lg md:max-w-xl lg:max-w-2xl">
                   {renderAnimatedText(description, 800, 15)}
                 </p>
 
                 {/* Butonlar */}
-                <div className="flex flex-wrap gap-3 md:gap-4 pt-4 animate-fade-in-up animation-delay-600">
+                <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-3 md:gap-4 lg:gap-5 pt-2 sm:pt-3 md:pt-4 lg:pt-6 animate-fade-in-up animation-delay-600">
                   <a
                     href={button1Link}
-                    className="px-6 py-3 md:px-8 md:py-4 bg-[#764e45] text-white rounded-lg hover:bg-[#5a3a33] transition-colors font-semibold text-sm md:text-base lg:text-lg shadow-lg"
+                    className="w-full sm:w-auto text-center px-5 py-3 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-4 bg-[#764e45] text-white rounded-lg hover:bg-[#5a3a33] transition-all duration-300 font-semibold text-sm sm:text-sm md:text-base lg:text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                   >
                     {button1Text}
                   </a>
                   <a
                     href={button2Link}
-                    className="px-6 py-3 md:px-8 md:py-4 bg-white text-[#764e45] rounded-lg hover:bg-gray-100 transition-colors font-semibold text-sm md:text-base lg:text-lg shadow-lg"
+                    className="w-full sm:w-auto text-center px-5 py-3 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-4 bg-white text-[#764e45] rounded-lg hover:bg-gray-100 transition-all duration-300 font-semibold text-sm sm:text-sm md:text-base lg:text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                   >
                     {button2Text}
                   </a>
