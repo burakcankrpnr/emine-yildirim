@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 
 interface CounselingServicesProps {
   videoUrl?: string
@@ -13,6 +13,84 @@ export default function CounselingServices({
   videoPoster = '/onlinedanismanlik.jpg',
 }: CounselingServicesProps) {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
+  const modalVideoRef = useRef<HTMLVideoElement>(null)
+
+  const openVideoModal = useCallback(() => {
+    setIsVideoModalOpen(true)
+    document.body.style.overflow = 'hidden'
+  }, [])
+
+  const closeVideoModal = useCallback(() => {
+    setIsVideoModalOpen(false)
+    document.body.style.overflow = 'unset'
+  }, [])
+
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [])
+
+  // Modal video otomatik oynatma için (mobil cihazlar)
+  useEffect(() => {
+    if (isVideoModalOpen && videoUrl) {
+      const modalVideo = modalVideoRef.current
+      if (modalVideo) {
+        // Video kaynağını yükle
+        modalVideo.load()
+        
+        const playModalVideo = async () => {
+          try {
+            // Video hazır olana kadar bekle
+            if (modalVideo.readyState < 3) {
+              await new Promise((resolve) => {
+                const handler = () => {
+                  modalVideo.removeEventListener('canplay', handler)
+                  resolve(undefined)
+                }
+                modalVideo.addEventListener('canplay', handler)
+              })
+            }
+            
+            await modalVideo.play()
+          } catch (error) {
+            console.log('Modal video otomatik oynatma engellendi:', error)
+          }
+        }
+
+        // Video yüklendiğinde oynat
+        if (modalVideo.readyState >= 3) {
+          playModalVideo()
+        } else {
+          modalVideo.addEventListener('canplay', playModalVideo, { once: true })
+          modalVideo.addEventListener('loadeddata', playModalVideo, { once: true })
+        }
+
+        return () => {
+          modalVideo.removeEventListener('canplay', playModalVideo)
+          modalVideo.removeEventListener('loadeddata', playModalVideo)
+        }
+      }
+    }
+  }, [isVideoModalOpen, videoUrl])
+
+  // ESC tuşu ile modal'ı kapat
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isVideoModalOpen) {
+        closeVideoModal()
+      }
+    }
+
+    if (isVideoModalOpen) {
+      window.addEventListener('keydown', handleEscape)
+    }
+
+    return () => {
+      window.removeEventListener('keydown', handleEscape)
+    }
+  }, [isVideoModalOpen, closeVideoModal])
+
   const services = [
     {
       title: "Yetişkin",
@@ -152,7 +230,7 @@ export default function CounselingServices({
               {/* Overlay ve Video Oynatma Butonu */}
               <div 
                 className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center"
-                onClick={() => setIsVideoModalOpen(true)}
+                onClick={openVideoModal}
               >
                 {/* Play İkonu */}
                 <div className="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-full bg-[#a47355] flex items-center justify-center shadow-2xl border-2 border-white hover:scale-110 transition-transform duration-300 cursor-pointer">
@@ -188,7 +266,7 @@ export default function CounselingServices({
     {isVideoModalOpen && (
       <div
         className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6"
-        onClick={() => setIsVideoModalOpen(false)}
+        onClick={closeVideoModal}
       >
         <div
           className="relative w-full h-full max-w-7xl max-h-[95vh] sm:max-h-[90vh] md:max-h-[85vh] flex items-center justify-center"
@@ -196,7 +274,7 @@ export default function CounselingServices({
         >
           {/* Kapat Butonu */}
           <button
-            onClick={() => setIsVideoModalOpen(false)}
+            onClick={closeVideoModal}
             className="absolute top-2 right-2 sm:top-4 sm:right-4 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-black bg-opacity-50 hover:bg-opacity-70 active:bg-opacity-80 text-white rounded-full flex items-center justify-center transition-all duration-300 touch-manipulation"
             aria-label="Kapat"
           >
@@ -212,23 +290,35 @@ export default function CounselingServices({
 
           {/* Video Container */}
           <div className="relative w-full h-full flex items-center justify-center px-2 sm:px-4 md:px-6">
-            <video
-              src={videoUrl}
-              poster={videoPoster}
-              controls
-              autoPlay
-              playsInline
-              className="w-full h-auto max-w-full max-h-[85vh] sm:max-h-[80vh] md:max-h-[75vh] object-contain rounded-lg shadow-2xl"
-              // Mobil optimizasyonları
-              preload="metadata"
-              // Responsive video attributes
-              style={{
-                maxWidth: '100%',
-                height: 'auto',
-              }}
-            >
-              Tarayıcınız video oynatmayı desteklemiyor.
-            </video>
+            {videoUrl && videoUrl.trim() !== '' ? (
+              <video
+                ref={modalVideoRef}
+                key={videoUrl}
+                src={videoUrl}
+                poster={videoPoster}
+                controls
+                autoPlay
+                playsInline
+                preload="auto"
+                className="w-full h-auto max-w-full max-h-[85vh] sm:max-h-[80vh] md:max-h-[75vh] object-contain rounded-lg shadow-2xl"
+                style={{
+                  maxWidth: '100%',
+                  height: 'auto',
+                }}
+                onLoadedMetadata={() => {
+                  console.log('Modal video metadata yüklendi')
+                }}
+                onCanPlayThrough={() => {
+                  console.log('Modal video tam yüklendi ve oynatılabilir')
+                }}
+              >
+                Tarayıcınız video oynatmayı desteklemiyor.
+              </video>
+            ) : (
+              <div className="flex items-center justify-center w-full h-full text-white">
+                <p className="text-lg">Video bulunamadı</p>
+              </div>
+            )}
           </div>
         </div>
       </div>

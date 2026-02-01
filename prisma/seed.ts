@@ -24,29 +24,6 @@ async function main() {
 
   console.log('Admin kullanıcı oluşturuldu:', admin)
 
-  // Örnek forum kategorileri
-  const category1 = await prisma.forumCategory.upsert({
-    where: { slug: 'genel' },
-    update: {},
-    create: {
-      name: 'Genel Tartışmalar',
-      description: 'Genel konular hakkında tartışmalar',
-      slug: 'genel',
-    },
-  })
-
-  const category2 = await prisma.forumCategory.upsert({
-    where: { slug: 'sorular' },
-    update: {},
-    create: {
-      name: 'Sorular ve Cevaplar',
-      description: 'Sorularınızı burada paylaşabilirsiniz',
-      slug: 'sorular',
-    },
-  })
-
-  console.log('Forum kategorileri oluşturuldu')
-
   // Admin kullanıcısı zaten Emine Yıldırım olarak oluşturuldu
   const emineYildirim = admin
 

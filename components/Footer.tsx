@@ -18,16 +18,12 @@ export default function Footer() {
               />
             </Link>
             <div className="flex items-center justify-center md:justify-start space-x-3 pt-4">
-              <a href="#" className="w-8 h-8 rounded-full border border-[#F5F5F5] flex items-center justify-center hover:bg-[#A07B5B] transition-colors">
-                <i className="fab fa-facebook-f text-[#F5F5F5] text-sm"></i>
-              </a>
-              <a href="#" className="w-8 h-8 rounded-full border border-[#F5F5F5] flex items-center justify-center hover:bg-[#A07B5B] transition-colors">
-                <i className="fab fa-twitter text-[#F5F5F5] text-sm"></i>
-              </a>
-              <a href="#" className="w-8 h-8 rounded-full border border-[#F5F5F5] flex items-center justify-center hover:bg-[#A07B5B] transition-colors">
-                <i className="fab fa-spotify text-[#F5F5F5] text-sm"></i>
-              </a>
-              <a href="#" className="w-8 h-8 rounded-full border border-[#F5F5F5] flex items-center justify-center hover:bg-[#A07B5B] transition-colors">
+              <a 
+                href="https://www.instagram.com/psk.emineyildirim/" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-full border border-[#F5F5F5] flex items-center justify-center hover:bg-[#A07B5B] transition-colors"
+              >
                 <i className="fab fa-instagram text-[#F5F5F5] text-sm"></i>
               </a>
             </div>
